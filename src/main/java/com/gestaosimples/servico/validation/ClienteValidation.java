@@ -1,4 +1,4 @@
-package com.gestaosimples.servico.resources.validation;
+package com.gestaosimples.servico.validation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,11 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import com.gestaosimples.servico.validation.impl.ClienteValidator;
 
-@Constraint(validatedBy = ClienteInsertValidator.class)
+@Constraint(validatedBy = ClienteValidator.class)
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Cliente {
+public @interface ClienteValidation {
 
     String message() default "Erro de validação";
 

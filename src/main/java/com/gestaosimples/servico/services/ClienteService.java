@@ -17,7 +17,6 @@ import com.gestaosimples.servico.domain.Cidade;
 import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.Endereco;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
-import com.gestaosimples.servico.domain.dto.ClienteNewDTO;
 import com.gestaosimples.servico.domain.enuns.Perfil;
 import com.gestaosimples.servico.domain.enuns.TipoCliente;
 import com.gestaosimples.servico.repositories.ClienteRepository;
@@ -86,10 +85,6 @@ public class ClienteService {
     }
 
     public Cliente fromDTO(ClienteDTO dto) {
-        return new Cliente(dto.getNome(), dto.getEmail());
-    }
-
-    public Cliente fromDTO(ClienteNewDTO dto) {
         Cliente cli = new Cliente(dto.getNome(), dto.getEmail(), dto.getCpfOuCnpj(), TipoCliente.toEnum(dto.getTipo()));
         Endereco end =
             new Endereco(dto.getLogradouro(), dto.getNumero(), dto.getComplemento(), dto.getBairro(), dto.getCep(), cli, new Cidade(dto.getIdCidade()));

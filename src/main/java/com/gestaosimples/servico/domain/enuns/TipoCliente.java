@@ -1,7 +1,9 @@
 package com.gestaosimples.servico.domain.enuns;
 
 public enum TipoCliente {
-    F("F", "Pessoa Física"), J("J", "Pessoa Jurídica");
+
+    F("F", "Pessoa Física"), //
+    J("J", "Pessoa Jurídica");
 
     private String codigo;
     private String descricao;
