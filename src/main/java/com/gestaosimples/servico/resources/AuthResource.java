@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gestaosimples.arquitetura.security.JWTUtil;
 import com.gestaosimples.arquitetura.security.UserSS;
 import com.gestaosimples.servico.domain.dto.EmailDTO;
-import com.gestaosimples.servico.services.AuthService;
-import com.gestaosimples.servico.services.UserService;
+import com.gestaosimples.servico.services.auth.AuthService;
+import com.gestaosimples.servico.services.auth.UserService;
 
 @RestController
 @RequestMapping(value = "/auth")

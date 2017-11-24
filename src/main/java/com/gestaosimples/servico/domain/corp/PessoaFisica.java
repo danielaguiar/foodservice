@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 import com.gestaosimples.servico.domain.enuns.SexoEnum;
 
 @Entity
-@Table(name = "T_PESSOA_FISICA", schema = "CORPORATIVO_MAPA")
+@Table(name = "T_PESSOA_FISICA")
 @DiscriminatorValue("F")
 @PrimaryKeyJoinColumn(name = "ID_PESSOA_FISICA")
 public class PessoaFisica extends Pessoa implements Serializable {

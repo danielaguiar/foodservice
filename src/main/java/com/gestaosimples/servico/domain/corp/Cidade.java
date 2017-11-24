@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t_cidade", schema = "foodservice")
+@Table(name = "t_cidade")
 public class Cidade implements Serializable {
 
     /**  */

@@ -16,11 +16,13 @@ import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.corp.Cidade;
 import com.gestaosimples.servico.domain.corp.Endereco;
+import com.gestaosimples.servico.domain.corp.Pessoa;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
 import com.gestaosimples.servico.domain.enuns.PerfilEnum;
 import com.gestaosimples.servico.domain.enuns.TipoClienteEnum;
 import com.gestaosimples.servico.repositories.ClienteRepository;
 import com.gestaosimples.servico.repositories.EnderecoRepository;
+import com.gestaosimples.servico.services.auth.UserService;
 
 @Service
 public class ClienteService {
@@ -87,7 +89,8 @@ public class ClienteService {
     public Cliente fromDTO(ClienteDTO dto) {
         Cliente cli = new Cliente(dto.getNome(), dto.getEmail(), dto.getCpfOuCnpj(), TipoClienteEnum.toEnum(dto.getTipo()));
         Endereco end =
-            new Endereco(dto.getLogradouro(), dto.getNumero(), dto.getComplemento(), dto.getBairro(), dto.getCep(), cli, new Cidade(dto.getIdCidade()));
+            new Endereco(dto.getLogradouro(), dto.getNumero(), dto.getComplemento(), dto.getBairro(), dto.getCep(), new Pessoa(1l), new Cidade(
+                dto.getIdCidade()));
         cli.getEnderecos().add(end);
         cli.getTelefones().add(dto.getTelefone1());
         if (!ObjetoUtil.isVazio(dto.getTelefone2())) {

@@ -17,7 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "T_PESSOA", schema = "CORPORATIVO_MAPA")
+@Table(name = "T_PESSOA")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "CD_TIPO_PESSOA", length = 1, discriminatorType = DiscriminatorType.STRING)
 public class Pessoa implements Serializable {

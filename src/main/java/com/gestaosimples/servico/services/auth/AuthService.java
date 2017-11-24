@@ -1,4 +1,4 @@
-package com.gestaosimples.servico.services;
+package com.gestaosimples.servico.services.auth;
 
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "t_estado", schema = "foodservice")
+@Table(name = "t_estado")
 public class Estado implements Serializable {
 
     /**  */
@@ -32,7 +32,6 @@ public class Estado implements Serializable {
     private List<Cidade> cidades = new ArrayList<Cidade>();
 
     public Estado() {
-        // TODO Auto-generated constructor stub
     }
 
     public Estado(Long id, String nome) {

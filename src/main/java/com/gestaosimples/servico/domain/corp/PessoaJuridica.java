@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @DiscriminatorValue("J")
-@Table(name = "S_PESSOA_JURIDICA", schema = "CORPORATIVO_MAPA")
+@Table(name = "S_PESSOA_JURIDICA")
 @PrimaryKeyJoinColumn(name = "ID_PESSOA_JURIDICA")
 public class PessoaJuridica extends Pessoa implements Serializable {
 

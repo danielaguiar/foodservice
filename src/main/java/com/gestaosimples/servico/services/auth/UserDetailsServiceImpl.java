@@ -1,4 +1,4 @@
-package com.gestaosimples.servico.services;
+package com.gestaosimples.servico.services.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

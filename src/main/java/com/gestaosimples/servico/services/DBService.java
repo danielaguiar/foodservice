@@ -17,6 +17,7 @@ import com.gestaosimples.servico.domain.Produto;
 import com.gestaosimples.servico.domain.corp.Cidade;
 import com.gestaosimples.servico.domain.corp.Endereco;
 import com.gestaosimples.servico.domain.corp.Estado;
+import com.gestaosimples.servico.domain.corp.Pessoa;
 import com.gestaosimples.servico.domain.enuns.EstadoPagamentoEnum;
 import com.gestaosimples.servico.domain.enuns.PerfilEnum;
 import com.gestaosimples.servico.domain.enuns.TipoClienteEnum;
@@ -121,9 +122,9 @@ public class DBService {
         cliente2.getTelefones().addAll(Arrays.asList("00000000000", "00000000000"));
         cliente1.addPerfil(PerfilEnum.A);
 
-        Endereco e1 = new Endereco("rua vlores", "teste", "teste", "adfasd", "72880576", cliente1, c1);
-        Endereco e2 = new Endereco("endereco e2", "e2", "e2", "e2", "72880576", cliente1, c2);
-        Endereco e3 = new Endereco("endereco e3", "e3", "e3", "e3", "72880576", cliente2, c3);
+        Endereco e1 = new Endereco("rua vlores", "teste", "teste", "adfasd", "72880576", new Pessoa(1l), c1);
+        Endereco e2 = new Endereco("endereco e2", "e2", "e2", "e2", "72880576", new Pessoa(2l), c2);
+        Endereco e3 = new Endereco("endereco e3", "e3", "e3", "e3", "72880576", new Pessoa(3l), c3);
 
         cliente1.getEnderecos().addAll(Arrays.asList(e1, e2));
         cliente2.getEnderecos().addAll(Arrays.asList(e3));

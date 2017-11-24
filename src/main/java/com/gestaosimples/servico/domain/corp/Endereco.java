@@ -12,7 +12,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gestaosimples.servico.domain.Cliente;
 
-@Table(name = "t_endereco", schema = "foodservice")
+@Entity
+@Table(name = "t_endereco")
 public class Endereco implements Serializable {
 
     /**  */
@@ -40,8 +41,8 @@ public class Endereco implements Serializable {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
+    @JoinColumn(name = "id_pessoa")
+    private Pessoa pessoa;
 
     @ManyToOne
     @JoinColumn(name = "id_cidade")
@@ -58,18 +59,16 @@ public class Endereco implements Serializable {
         this.complemento = complemento;
         this.bairro = bairro;
         this.cep = cep;
-        this.cliente = cliente;
         this.cidade = cidade;
     }
 
-    public Endereco(String logradouro, String numero, String complemento, String bairro, String cep, Cliente cliente, Cidade cidade) {
+    public Endereco(String logradouro, String numero, String complemento, String bairro, String cep, Pessoa pessoa, Cidade cidade) {
         super();
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
         this.cep = cep;
-        this.cliente = cliente;
         this.cidade = cidade;
     }
 
@@ -121,12 +120,12 @@ public class Endereco implements Serializable {
         this.cep = cep;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
     public Cidade getCidade() {
