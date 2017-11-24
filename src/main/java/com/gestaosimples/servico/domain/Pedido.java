@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
+import com.gestaosimples.servico.domain.corp.Endereco;
 
 @Entity(name = "t_pedido")
 public class Pedido implements Serializable {

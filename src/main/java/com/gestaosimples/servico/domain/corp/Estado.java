@@ -1,4 +1,4 @@
-package com.gestaosimples.servico.domain;
+package com.gestaosimples.servico.domain.corp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,9 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name = "t_estado")
+@Entity
+@Table(name = "t_estado", schema = "foodservice")
 public class Estado implements Serializable {
 
     /**  */

@@ -13,12 +13,12 @@ import com.gestaosimples.arquitetura.exceptions.DataIntegrityException;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.security.UserSS;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
-import com.gestaosimples.servico.domain.Cidade;
 import com.gestaosimples.servico.domain.Cliente;
-import com.gestaosimples.servico.domain.Endereco;
+import com.gestaosimples.servico.domain.corp.Cidade;
+import com.gestaosimples.servico.domain.corp.Endereco;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
-import com.gestaosimples.servico.domain.enuns.Perfil;
-import com.gestaosimples.servico.domain.enuns.TipoCliente;
+import com.gestaosimples.servico.domain.enuns.PerfilEnum;
+import com.gestaosimples.servico.domain.enuns.TipoClienteEnum;
 import com.gestaosimples.servico.repositories.ClienteRepository;
 import com.gestaosimples.servico.repositories.EnderecoRepository;
 
@@ -37,7 +37,7 @@ public class ClienteService {
     public Cliente find(Long id) {
 
         UserSS user = UserService.authenticated();
-        if (user != null && !user.hasRole(Perfil.A) && !user.getId().equals(id)) {
+        if (user != null && !user.hasRole(PerfilEnum.A) && !user.getId().equals(id)) {
             throw new AutorizationException("operação no permitida");
         }
 
@@ -85,7 +85,7 @@ public class ClienteService {
     }
 
     public Cliente fromDTO(ClienteDTO dto) {
-        Cliente cli = new Cliente(dto.getNome(), dto.getEmail(), dto.getCpfOuCnpj(), TipoCliente.toEnum(dto.getTipo()));
+        Cliente cli = new Cliente(dto.getNome(), dto.getEmail(), dto.getCpfOuCnpj(), TipoClienteEnum.toEnum(dto.getTipo()));
         Endereco end =
             new Endereco(dto.getLogradouro(), dto.getNumero(), dto.getComplemento(), dto.getBairro(), dto.getCep(), cli, new Cidade(dto.getIdCidade()));
         cli.getEnderecos().add(end);

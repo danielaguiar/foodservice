@@ -7,7 +7,7 @@ import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.mail.EmailService;
 import com.gestaosimples.servico.domain.PagamentoComBoleto;
 import com.gestaosimples.servico.domain.Pedido;
-import com.gestaosimples.servico.domain.enuns.EstadoPagamento;
+import com.gestaosimples.servico.domain.enuns.EstadoPagamentoEnum;
 import com.gestaosimples.servico.repositories.ItemPedidoRepository;
 import com.gestaosimples.servico.repositories.PagamentoRepository;
 import com.gestaosimples.servico.repositories.PedidoRepository;
@@ -46,7 +46,7 @@ public class PedidoService {
 
         pedido.setId(null);
         pedido.setInstante(new Date());
-        pedido.getPagamento().setTipo(EstadoPagamento.P);
+        pedido.getPagamento().setTipo(EstadoPagamentoEnum.P);
         pedido.getPagamento().setPedido(pedido);
         if (pedido.getPagamento() instanceof PagamentoComBoleto) {
             PagamentoComBoleto boleto = (PagamentoComBoleto) pedido.getPagamento();

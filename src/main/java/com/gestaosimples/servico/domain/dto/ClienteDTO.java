@@ -2,7 +2,7 @@ package com.gestaosimples.servico.domain.dto;
 
 import java.io.Serializable;
 import com.gestaosimples.servico.domain.Cliente;
-import com.gestaosimples.servico.domain.enuns.TipoCliente;
+import com.gestaosimples.servico.domain.enuns.TipoClienteEnum;
 import com.gestaosimples.servico.validation.ClienteValidation;
 
 @ClienteValidation
@@ -179,11 +179,11 @@ public class ClienteDTO implements Serializable {
     }
 
     public boolean isPessoaFisica() {
-        return tipo != null && tipo.equals(TipoCliente.F.getCodigo());
+        return tipo != null && tipo.equals(TipoClienteEnum.F.getCodigo());
     }
 
     public boolean isPessoaJuridica() {
-        return tipo != null && tipo.equals(TipoCliente.J.getCodigo());
+        return tipo != null && tipo.equals(TipoClienteEnum.J.getCodigo());
     }
 
     public String getSenha() {

@@ -1,4 +1,4 @@
-package com.gestaosimples.servico.domain;
+package com.gestaosimples.servico.domain.corp;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -8,8 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@Entity(name = "t_cidade")
+@Entity
+@Table(name = "t_cidade", schema = "foodservice")
 public class Cidade implements Serializable {
 
     /**  */

@@ -5,7 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.gestaosimples.servico.domain.enuns.EstadoPagamento;
+import com.gestaosimples.servico.domain.enuns.EstadoPagamentoEnum;
 
 @Entity(name = "t_pagamento_boleto")
 @JsonTypeName("pagamentoComBoleto")
@@ -25,13 +25,13 @@ public class PagamentoComBoleto extends Pagamento {
     public PagamentoComBoleto() {
     }
 
-    public PagamentoComBoleto(Long id, EstadoPagamento tipo, Pedido pedido, Date dataVencimento, Date dataPagamento) {
+    public PagamentoComBoleto(Long id, EstadoPagamentoEnum tipo, Pedido pedido, Date dataVencimento, Date dataPagamento) {
         super(id, tipo, pedido);
         this.dataPagamento = dataPagamento;
         this.dataVencimento = dataVencimento;
     }
 
-    public PagamentoComBoleto(EstadoPagamento tipo, Pedido pedido, Date dataVencimento, Date dataPagamento) {
+    public PagamentoComBoleto(EstadoPagamentoEnum tipo, Pedido pedido, Date dataVencimento, Date dataPagamento) {
         super(tipo, pedido);
         this.dataPagamento = dataPagamento;
         this.dataVencimento = dataVencimento;

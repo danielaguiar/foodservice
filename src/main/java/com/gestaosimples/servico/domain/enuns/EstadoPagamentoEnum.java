@@ -1,14 +1,14 @@
 package com.gestaosimples.servico.domain.enuns;
 
-public enum TipoCliente {
-
-    F("F", "Pessoa Física"), //
-    J("J", "Pessoa Jurídica");
+public enum EstadoPagamentoEnum {
+    P("P", "Pendenete"), //
+    Q("Q", "Quitado"), //
+    C("C", "Cancelado");
 
     private String codigo;
     private String descricao;
 
-    private TipoCliente(String codigo, String descricao) {
+    private EstadoPagamentoEnum(String codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }
@@ -29,11 +29,11 @@ public enum TipoCliente {
         this.descricao = descricao;
     }
 
-    public static TipoCliente toEnum(String codigo) {
+    public static EstadoPagamentoEnum toEnum(String codigo) {
         if (codigo == null) {
             return null;
         }
-        for (TipoCliente tipo : TipoCliente.values()) {
+        for (EstadoPagamentoEnum tipo : EstadoPagamentoEnum.values()) {
             if (tipo.getCodigo().equals(codigo)) {
                 return tipo;
             }

@@ -7,19 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.gestaosimples.servico.domain.Categoria;
-import com.gestaosimples.servico.domain.Cidade;
 import com.gestaosimples.servico.domain.Cliente;
-import com.gestaosimples.servico.domain.Endereco;
-import com.gestaosimples.servico.domain.Estado;
 import com.gestaosimples.servico.domain.ItemPedido;
 import com.gestaosimples.servico.domain.Pagamento;
 import com.gestaosimples.servico.domain.PagamentoComBoleto;
 import com.gestaosimples.servico.domain.PagamentoComCartao;
 import com.gestaosimples.servico.domain.Pedido;
 import com.gestaosimples.servico.domain.Produto;
-import com.gestaosimples.servico.domain.enuns.EstadoPagamento;
-import com.gestaosimples.servico.domain.enuns.Perfil;
-import com.gestaosimples.servico.domain.enuns.TipoCliente;
+import com.gestaosimples.servico.domain.corp.Cidade;
+import com.gestaosimples.servico.domain.corp.Endereco;
+import com.gestaosimples.servico.domain.corp.Estado;
+import com.gestaosimples.servico.domain.enuns.EstadoPagamentoEnum;
+import com.gestaosimples.servico.domain.enuns.PerfilEnum;
+import com.gestaosimples.servico.domain.enuns.TipoClienteEnum;
 import com.gestaosimples.servico.repositories.CategoriaRepository;
 import com.gestaosimples.servico.repositories.CidadeRepository;
 import com.gestaosimples.servico.repositories.ClienteRepository;
@@ -114,12 +114,12 @@ public class DBService {
         est1.getCidades().addAll(Arrays.asList(c1));
         est2.getCidades().addAll(Arrays.asList(c2, c3));
 
-        Cliente cliente1 = new Cliente("Daniel Aguiar", "bsb.aguiar@gmail.com", "65847580100", TipoCliente.F, pe.encode("123"));
-        Cliente cliente2 = new Cliente("Kaio Ferreira Aguiar", "kaioferreiraaguiar@gmail.com", "00000000001", TipoCliente.F, pe.encode("123"));
+        Cliente cliente1 = new Cliente("Daniel Aguiar", "bsb.aguiar@gmail.com", "65847580100", TipoClienteEnum.F, pe.encode("123"));
+        Cliente cliente2 = new Cliente("Kaio Ferreira Aguiar", "kaioferreiraaguiar@gmail.com", "00000000001", TipoClienteEnum.F, pe.encode("123"));
 
         cliente1.getTelefones().addAll(Arrays.asList("00000000000", "0000000010101"));
         cliente2.getTelefones().addAll(Arrays.asList("00000000000", "00000000000"));
-        cliente1.addPerfil(Perfil.A);
+        cliente1.addPerfil(PerfilEnum.A);
 
         Endereco e1 = new Endereco("rua vlores", "teste", "teste", "adfasd", "72880576", cliente1, c1);
         Endereco e2 = new Endereco("endereco e2", "e2", "e2", "e2", "72880576", cliente1, c2);
@@ -133,9 +133,9 @@ public class DBService {
         Pedido ped1 = new Pedido(sdf.parse("30/09/2017 12:12"), cliente1, e1);
         Pedido ped2 = new Pedido(sdf.parse("10/10/2017 19:32"), cliente1, e2);
 
-        Pagamento pgto1 = new PagamentoComCartao(EstadoPagamento.Q, ped1, 6);
+        Pagamento pgto1 = new PagamentoComCartao(EstadoPagamentoEnum.Q, ped1, 6);
         ped1.setPagamento(pgto1);
-        Pagamento pgto2 = new PagamentoComBoleto(EstadoPagamento.P, ped2, sdf.parse("11/12/2018 00:00"), null);
+        Pagamento pgto2 = new PagamentoComBoleto(EstadoPagamentoEnum.P, ped2, sdf.parse("11/12/2018 00:00"), null);
         ped2.setPagamento(pgto2);
 
         cliente1.getPedidos().addAll(Arrays.asList(ped1));

@@ -20,8 +20,9 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gestaosimples.servico.domain.enuns.Perfil;
-import com.gestaosimples.servico.domain.enuns.TipoCliente;
+import com.gestaosimples.servico.domain.corp.Endereco;
+import com.gestaosimples.servico.domain.enuns.PerfilEnum;
+import com.gestaosimples.servico.domain.enuns.TipoClienteEnum;
 
 @Entity(name = "t_cliente")
 public class Cliente implements Serializable {
@@ -46,7 +47,7 @@ public class Cliente implements Serializable {
     @Enumerated(EnumType.STRING)
     @NotFound(action = NotFoundAction.IGNORE)
     @Column(name = "cl_tipo_cliente", length = 1)
-    private TipoCliente tipo;
+    private TipoClienteEnum tipo;
 
     @JsonIgnore
     @Column(name = "ds_senha")
@@ -62,17 +63,17 @@ public class Cliente implements Serializable {
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "t_perfis")
-    private Set<Perfil> perfis = new HashSet<Perfil>();
+    private Set<PerfilEnum> perfis = new HashSet<PerfilEnum>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<Pedido>();
 
     public Cliente() {
-        addPerfil(Perfil.C);
+        addPerfil(PerfilEnum.C);
     }
 
-    public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
+    public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoClienteEnum tipo, String senha) {
         super();
         this.id = id;
         this.nome = nome;
@@ -80,26 +81,26 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = tipo;
         this.senha = senha;
-        addPerfil(Perfil.C);
+        addPerfil(PerfilEnum.C);
     }
 
-    public Cliente(String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+    public Cliente(String nome, String email, String cpfOuCnpj, TipoClienteEnum tipo) {
         super();
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = tipo;
-        addPerfil(Perfil.C);
+        addPerfil(PerfilEnum.C);
     }
 
-    public Cliente(String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
+    public Cliente(String nome, String email, String cpfOuCnpj, TipoClienteEnum tipo, String senha) {
         super();
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = tipo;
         this.senha = senha;
-        addPerfil(Perfil.C);
+        addPerfil(PerfilEnum.C);
     }
 
     public Cliente(String nome, String email) {
@@ -140,11 +141,11 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
     }
 
-    public TipoCliente getTipo() {
+    public TipoClienteEnum getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoCliente tipo) {
+    public void setTipo(TipoClienteEnum tipo) {
         this.tipo = tipo;
     }
 
@@ -180,12 +181,12 @@ public class Cliente implements Serializable {
         this.senha = senha;
     }
 
-    public Set<Perfil> getPerfis() {
+    public Set<PerfilEnum> getPerfis() {
         //        return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
         return perfis;
     }
 
-    public void addPerfil(Perfil perfil) {
+    public void addPerfil(PerfilEnum perfil) {
         //        this.perfis.add(perfil.getCodigo());
         this.perfis.add(perfil);
     }
