@@ -8,10 +8,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.gestaosimples.arquitetura.exceptions.AutorizationException;
+import com.gestaosimples.arquitetura.exceptions.AuthorizationException;
 import com.gestaosimples.arquitetura.exceptions.DataIntegrityException;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.security.UserSS;
+import com.gestaosimples.arquitetura.services.auth.UserService;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.corp.Cidade;
@@ -22,7 +23,6 @@ import com.gestaosimples.servico.domain.enuns.PerfilEnum;
 import com.gestaosimples.servico.domain.enuns.TipoClienteEnum;
 import com.gestaosimples.servico.repositories.ClienteRepository;
 import com.gestaosimples.servico.repositories.EnderecoRepository;
-import com.gestaosimples.servico.services.auth.UserService;
 
 @Service
 public class ClienteService {
@@ -40,7 +40,7 @@ public class ClienteService {
 
         UserSS user = UserService.authenticated();
         if (user != null && !user.hasRole(PerfilEnum.A) && !user.getId().equals(id)) {
-            throw new AutorizationException("operação no permitida");
+            throw new AuthorizationException("operação no permitida");
         }
 
         Cliente obj = repo.findOne(id);

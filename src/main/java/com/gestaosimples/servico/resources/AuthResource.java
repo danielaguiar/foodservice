@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.gestaosimples.arquitetura.security.JWTUtil;
 import com.gestaosimples.arquitetura.security.UserSS;
+import com.gestaosimples.arquitetura.services.auth.AuthService;
+import com.gestaosimples.arquitetura.services.auth.UserService;
 import com.gestaosimples.servico.domain.dto.EmailDTO;
-import com.gestaosimples.servico.services.auth.AuthService;
-import com.gestaosimples.servico.services.auth.UserService;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -26,7 +26,7 @@ public class AuthResource extends AbstractResource {
 
     @RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
     public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
-        UserSS user = UserService.authenticated();
+        UserSS user = UserService.getUsuarioLogado();
         String token = jwtUtil.generateToken(user.getUsername());
         response.addHeader("Authorization", "Bearer " + token);
         return ResponseEntity.noContent().build();

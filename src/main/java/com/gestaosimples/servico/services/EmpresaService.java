@@ -1,26 +1,25 @@
 package com.gestaosimples.servico.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.gestaosimples.arquitetura.exceptions.AutorizationException;
+import com.gestaosimples.arquitetura.exceptions.AuthorizationException;
 import com.gestaosimples.arquitetura.exceptions.DataIntegrityException;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.security.UserSS;
-import com.gestaosimples.servico.domain.Empresa;
+import com.gestaosimples.arquitetura.services.auth.UserService;
+import com.gestaosimples.servico.domain.corp.PessoaJuridica;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
-import com.gestaosimples.servico.domain.enuns.PerfilEnum;
 import com.gestaosimples.servico.repositories.EmpresaRepository;
 import com.gestaosimples.servico.repositories.EnderecoRepository;
-import com.gestaosimples.servico.services.auth.UserService;
 
 @Service
-public class EmpresaService {
+public class EmpresaService extends AbstractService {
 
     @Autowired
     private EmpresaRepository repo;
@@ -28,37 +27,42 @@ public class EmpresaService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder pe;
+    private PessoaJuridica findOne(Long id) {
+        PessoaJuridica pessoa = repo.findOne(id);
+        if (pessoa == null) {
+            throw new ObjectNotFoundException("Objeto não econtrado! id: " + id + ", " + PessoaJuridica.class.getName());
+        }
+        return pessoa;
+    }
 
-    public Empresa find(Long id) {
+    public EmpresaDTO find(Long id) {
 
-        UserSS user = UserService.authenticated();
-        if (user != null && !user.hasRole(PerfilEnum.A) && !user.getId().equals(id)) {
-            throw new AutorizationException("operação no permitida");
+        UserSS user = UserService.getUsuarioLogado();
+        if (UserService.isUsuarioLogadoAdmin() && !user.getId().equals(id)) {
+            throw new AuthorizationException("operação no permitida");
         }
 
-        Empresa obj = repo.findOne(id);
-        if (obj == null) {
-            throw new ObjectNotFoundException("Objeto não econtrado! id: " + id + ", " + EmpresaService.class.getName());
-        }
-        return obj;
+        PessoaJuridica pessoa = findOne(id);
+        return fromPessoaJuridica(pessoa);
     }
 
-    public Empresa insert(Empresa empresa) {
-        empresa.setPessoa(null);
-        Empresa cli = repo.save(empresa);
-        //enderecoRepository.save(empresa.getEnderecos());
-        return cli;
+    public EmpresaDTO insert(PessoaJuridica pessoa) {
+        repo.save(pessoa);
+        enderecoRepository.save(pessoa.getEndereco());
+        return fromPessoaJuridica(pessoa);
     }
 
-    public Empresa update(Empresa empresa) {
-        Empresa cli = find(empresa.getPessoa().getIdPessoa());
-        updataData(empresa, cli);
-        return repo.save(empresa);
+    public EmpresaDTO update(EmpresaDTO pessoaDTO) {
+        PessoaJuridica empresaBanco = findOne(pessoaDTO.getId());
+        PessoaJuridica pessoa = fromDTO(pessoaDTO);
+        updataData(pessoa, empresaBanco);
+        repo.save(empresaBanco);
+        return fromPessoaJuridica(empresaBanco);
     }
 
-    private void updataData(Empresa empresa, Empresa cli) {
+    private void updataData(PessoaJuridica pessoa, PessoaJuridica pessoaBanco) {
+        //pessoaBanco.setNome(pessoaAtual.getNome());
+        //pessoaBanco.setEmail(pessoaAtual.getEmail());
     }
 
     public void delete(Long id) {
@@ -66,29 +70,26 @@ public class EmpresaService {
         try {
             repo.delete(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possível excluir uma empresa que tem pedidos");
+            throw new DataIntegrityException("Não é possível excluir uma cliente que tem pedidos");
         }
     }
 
-    public List<Empresa> findAll() {
-        return repo.findAll();
+    public List<EmpresaDTO> findAll() {
+        List<PessoaJuridica> findAll = repo.findAll();
+        return findAll.stream().map(x -> new EmpresaDTO(x)).collect(Collectors.toList());
     }
 
-    public Page<Empresa> findPage(Integer page, Integer linesPerPage, String orderby, String direction) {
+    public Page<EmpresaDTO> findPage(Integer page, Integer linesPerPage, String orderby, String direction) {
         PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderby);
-        return repo.findAll(pageRequest);
+        Page<PessoaJuridica> findAll = repo.findAll(pageRequest);
+        return findAll.map(obj -> new EmpresaDTO(obj));
     }
 
-    public Empresa fromDTO(EmpresaDTO dto) {
-        Empresa empresa = new Empresa();
-        /*
-         * Endereco end = new Endereco(dto.getLogradouro(), dto.getNumero(), dto.getComplemento(),
-         * dto.getBairro(), dto.getCep(), new Pessoa(1l), new Cidade( dto.getIdCidade()));
-         * cli.getEnderecos().add(end); cli.getTelefones().add(dto.getTelefone1()); if
-         * (!ObjetoUtil.isVazio(dto.getTelefone2())) { cli.getTelefones().add(dto.getTelefone2());
-         * } if (!ObjetoUtil.isVazio(dto.getTelefone3())) {
-         * cli.getTelefones().add(dto.getTelefone3()); } cli.setSenha(pe.encode(dto.getSenha()));
-         */
-        return empresa;
+    private EmpresaDTO fromPessoaJuridica(PessoaJuridica pessoa) {
+        return new EmpresaDTO(pessoa);
+    }
+
+    public PessoaJuridica fromDTO(EmpresaDTO dto) {
+        return new PessoaJuridica(dto);
     }
 }

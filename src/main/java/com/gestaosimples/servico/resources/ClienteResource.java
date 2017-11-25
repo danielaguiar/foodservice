@@ -1,6 +1,5 @@
 package com.gestaosimples.servico.resources;
 
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -14,14 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
 import com.gestaosimples.servico.services.ClienteService;
 
 @RestController
 @RequestMapping(value = "/clientes")
-public class ClienteResource {
+public class ClienteResource extends AbstractResource {
 
     @Autowired
     private ClienteService service;
@@ -29,17 +27,16 @@ public class ClienteResource {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> find(@PathVariable Long id) {
         Cliente cliente = service.find(id);
-        cliente.getPerfis();
-        return ResponseEntity.ok().body(cliente);
+        return this.okResponseObject(cliente);
 
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<ClienteDTO>> findAll() {
+    public ResponseEntity<List<?>> findAll() {
         List<Cliente> clientes = service.findAll();
         List<ClienteDTO> listDto = clientes.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDto);
+        return this.okResponseList(listDto);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -55,24 +52,21 @@ public class ClienteResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO cateogria) {
-        Cliente obj = service.insert(service.fromDTO(cateogria));
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO cliente) {
+        Cliente obj = service.insert(service.fromDTO(cliente));
+        return this.createResponse("/{id}", obj);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Cliente cateogria) {
-        cateogria.setId(id);
-        service.update(cateogria);
-        return ResponseEntity.noContent().build();
+        return this.noContentResponse();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.noContent().build();
+        return this.noContentResponse();
 
     }
 

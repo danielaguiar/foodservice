@@ -1,22 +1,26 @@
-package com.gestaosimples.servico.services.auth;
+package com.gestaosimples.arquitetura.services.auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.security.UserSS;
-import com.gestaosimples.servico.repositories.ClienteRepository;
+import com.gestaosimples.servico.domain.enuns.PerfilEnum;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-    public static UserSS authenticated() {
+    private static UserSS authenticated() {
         try {
             return (UserSS) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static UserSS getUsuarioLogado() {
+        return authenticated();
+    }
+
+    public static boolean isUsuarioLogadoAdmin() {
+        return getUsuarioLogado() != null && getUsuarioLogado().hasRole(PerfilEnum.A);
     }
 }

@@ -2,7 +2,7 @@ package com.gestaosimples.servico.domain.dto;
 
 import java.io.Serializable;
 import com.gestaosimples.servico.domain.Cliente;
-import com.gestaosimples.servico.domain.Empresa;
+import com.gestaosimples.servico.domain.corp.PessoaJuridica;
 import com.gestaosimples.servico.domain.enuns.TipoClienteEnum;
 import com.gestaosimples.servico.validation.EmpresaValidation;
 
@@ -42,7 +42,7 @@ public class EmpresaDTO implements Serializable {
 
     private Long idCidade;
 
-    public EmpresaDTO(Empresa empresa) {
+    public EmpresaDTO(PessoaJuridica pessoa) {
     }
 
     public EmpresaDTO(Cliente obj) {

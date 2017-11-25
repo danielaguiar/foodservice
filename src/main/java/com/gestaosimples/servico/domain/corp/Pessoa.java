@@ -1,8 +1,6 @@
 package com.gestaosimples.servico.domain.corp;
 
 import java.io.Serializable;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -12,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -30,9 +27,6 @@ public class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_PESSOA")
     protected Long idPessoa;
 
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    private Set<Endereco> enderecos;
-
     public Pessoa() {
     }
 
@@ -47,14 +41,6 @@ public class Pessoa implements Serializable {
 
     public void setIdPessoa(Long idPessoa) {
         this.idPessoa = idPessoa;
-    }
-
-    public Set<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(Set<Endereco> enderecos) {
-        this.enderecos = enderecos;
     }
 
     @Override
