@@ -27,7 +27,7 @@ public class AuthResource extends AbstractResource {
     @RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
     public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
         UserSS user = UserService.getUsuarioLogado();
-        String token = jwtUtil.generateToken(user.getUsername());
+        String token = jwtUtil.generateToken(user);
         response.addHeader("Authorization", "Bearer " + token);
         return ResponseEntity.noContent().build();
     }

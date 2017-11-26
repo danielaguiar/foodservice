@@ -29,14 +29,14 @@ public class EmpresaResource extends AbstractResource {
 
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN_MASTER')")
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<?>> findAll() {
         List<EmpresaDTO> empresas = service.findAll();
         return this.okResponseList(empresas);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN_MASTER')")
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public Page<EmpresaDTO> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page, //
         @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, //

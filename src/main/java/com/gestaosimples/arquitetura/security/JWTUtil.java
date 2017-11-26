@@ -1,11 +1,12 @@
 package com.gestaosimples.arquitetura.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import com.gestaosimples.arquitetura.util.ObjetoUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JWTUtil {
@@ -16,10 +17,14 @@ public class JWTUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    public String generateToken(String username) {
-        return Jwts.builder().setSubject(username) //
+    public String generateToken(UserSS user) {
+
+        return Jwts.builder().setSubject(user.getUsername()) //
             .setExpiration(new Date(System.currentTimeMillis() + expiration)) //
             .signWith(SignatureAlgorithm.HS512, secret.getBytes()) //
+            //.setClaims(claims) //
+            .claim("idEmpresa", user.getIdEmpresa()) //
+            .claim("idUsuario", user.getId()) //
             .compact();
     }
 
@@ -40,6 +45,15 @@ public class JWTUtil {
         Claims claims = getClaims(token);
         if (claims != null) {
             return claims.getSubject();
+        }
+        return null;
+    }
+
+    public Long getEmpresa(String token) {
+        Claims claims = getClaims(token);
+        if (claims != null && !ObjetoUtil.isVazio(claims.get("idEmpresa"))) {
+            Object id = claims.get("idEmpresa");
+            return (Long) id;
         }
         return null;
     }

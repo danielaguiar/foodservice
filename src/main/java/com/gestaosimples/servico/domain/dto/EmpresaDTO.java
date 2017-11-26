@@ -1,8 +1,11 @@
 package com.gestaosimples.servico.domain.dto;
 
 import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
+import com.gestaosimples.servico.domain.corp.Email;
 import com.gestaosimples.servico.domain.corp.PessoaJuridica;
+import com.gestaosimples.servico.domain.corp.Usuario;
 import com.gestaosimples.servico.domain.enuns.TipoPessoaEnum;
 import com.gestaosimples.servico.validation.EmpresaValidation;
 
@@ -22,6 +25,12 @@ public class EmpresaDTO implements Serializable {
 
     private TipoPessoaEnum tipo;
 
+    @JsonIgnore
+    private Email email;
+
+    @JsonIgnore
+    private Usuario usuario;
+
     private EnderecoDTO endereco;
 
     private TelefoneDTO telefone;
@@ -39,11 +48,13 @@ public class EmpresaDTO implements Serializable {
             this.endereco = new EnderecoDTO(pessoa.getEnderecos().iterator().next());
         }
         this.telefone = new TelefoneDTO(pessoa.getTelefone());
+        this.email = pessoa.getEmail();
+        this.usuario = pessoa.getUsuario();
 
     }
 
-    public EmpresaDTO(Long id, String nmRazaoSocial, String nmFantasia, String cpfOuCnpj, String email, String tipo, EnderecoDTO endereco,
-        TelefoneDTO telefone) {
+    public EmpresaDTO(Long id, String nmRazaoSocial, String nmFantasia, String cpfOuCnpj, String tipo, EnderecoDTO endereco, TelefoneDTO telefone, Email email,
+        Usuario usuario) {
         super();
         this.id = id;
         this.nmRazaoSocial = nmRazaoSocial;
@@ -52,6 +63,8 @@ public class EmpresaDTO implements Serializable {
         this.tipo = tipo == null ? null : TipoPessoaEnum.toEnum(tipo);
         this.endereco = endereco;
         this.telefone = telefone;
+        this.email = email;
+        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -108,6 +121,26 @@ public class EmpresaDTO implements Serializable {
 
     public void setTelefone(TelefoneDTO telefone) {
         this.telefone = telefone;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
+    public void setTipo(TipoPessoaEnum tipo) {
+        this.tipo = tipo;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

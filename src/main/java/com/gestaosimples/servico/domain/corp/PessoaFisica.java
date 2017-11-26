@@ -17,7 +17,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import com.gestaosimples.servico.domain.Telefone;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
 import com.gestaosimples.servico.domain.enuns.SexoEnum;
 

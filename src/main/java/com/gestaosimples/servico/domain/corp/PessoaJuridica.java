@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import com.gestaosimples.servico.domain.Telefone;
+import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
 
 @Entity
@@ -69,6 +69,14 @@ public class PessoaJuridica extends Pessoa implements Serializable {
         this.setTelefone(new Telefone(dto.getTelefone(), this));
         this.enderecos = new ArrayList<>();
         enderecos.add(new Endereco(dto.getEndereco(), this));
+        if (!ObjetoUtil.isVazio(dto.getEmail())) {
+            this.setEmail(new Email(null, dto.getEmail().getEdEmail(), this));
+        }
+        if (!ObjetoUtil.isVazio(dto.getUsuario())) {
+            dto.getUsuario().setPessoa(this);
+            dto.getUsuario().setEmpresa(this);
+            this.setUsuario(dto.getUsuario());
+        }
 
     }
 

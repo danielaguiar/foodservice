@@ -6,14 +6,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.mail.EmailService;
-import com.gestaosimples.servico.domain.Cliente;
-import com.gestaosimples.servico.repositories.PessoaFisicaRepository;
+import com.gestaosimples.servico.domain.corp.Usuario;
+import com.gestaosimples.servico.repositories.UsuarioRepository;
 
 @Service
 public class AuthService {
 
     @Autowired
-    private PessoaFisicaRepository clienteRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private BCryptPasswordEncoder be;
@@ -25,15 +25,15 @@ public class AuthService {
 
     public void sendNewPassword(String email) {
 
-        Cliente cliente = null;//clienteRepository.findByEmail(email);
-        if (cliente == null) {
+        Usuario usuario = usuarioRepository.findByPessoaEmailEdEmail(email);
+        if (usuario == null) {
             throw new ObjectNotFoundException("email não localizado!!");
         }
 
         String newPass = newPassword();
-        cliente.setSenha(be.encode(newPass));
-        //clienteRepository.save(cliente);
-        emailService.sendNewPasswordEmail(cliente, newPass);
+        usuario.setSenha(be.encode(newPass));
+        usuarioRepository.save(usuario);
+        emailService.sendNewPasswordEmail(usuario.getPessoa(), newPass);
     }
 
     private String newPassword() {

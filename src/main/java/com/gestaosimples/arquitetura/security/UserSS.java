@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.gestaosimples.servico.domain.Cliente;
+import com.gestaosimples.servico.domain.corp.Usuario;
 import com.gestaosimples.servico.domain.enuns.PerfilEnum;
 
 public class UserSS implements UserDetails {
@@ -14,25 +14,27 @@ public class UserSS implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String email;
+    private Long idEmpresa;
+    private String login;
     private String senha;
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserSS() {
     }
 
-    public UserSS(Cliente cliente) {
+    public UserSS(Usuario usuario) {
         super();
-        this.id = cliente.getId();
-        this.email = cliente.getEmail();
-        this.senha = cliente.getSenha();
-        this.authorities = cliente.getPerfis().stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
+        this.id = usuario.getId();
+        this.login = usuario.getLogin();
+        this.senha = usuario.getSenha();
+        this.idEmpresa = usuario.getEmpresa().getIdPessoa();
+        this.authorities = usuario.getPerfis().stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
     }
 
-    public UserSS(Long id, String email, String senha, Set<PerfilEnum> perfis) {
+    public UserSS(Long id, String login, String senha, Set<PerfilEnum> perfis) {
         super();
         this.id = id;
-        this.email = email;
+        this.login = login;
         this.senha = senha;
         this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
     }
@@ -53,7 +55,7 @@ public class UserSS implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return login;
     }
 
     @Override
@@ -78,5 +80,13 @@ public class UserSS implements UserDetails {
 
     public boolean hasRole(PerfilEnum perfil) {
         return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
+    }
+
+    public Long getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Long idEmpresa) {
+        this.idEmpresa = idEmpresa;
     }
 }

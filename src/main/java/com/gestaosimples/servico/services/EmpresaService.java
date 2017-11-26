@@ -75,7 +75,8 @@ public class EmpresaService extends AbstractService {
 
     public List<EmpresaDTO> findAll() {
         List<PessoaJuridica> findAll = repo.findAll();
-        return findAll.stream().map(x -> new EmpresaDTO(x)).collect(Collectors.toList());
+        List<EmpresaDTO> empresas = findAll.stream().map(x -> new EmpresaDTO(x)).collect(Collectors.toList());
+        return empresas;
     }
 
     public Page<EmpresaDTO> findPage(Integer page, Integer linesPerPage, String orderby, String direction) {

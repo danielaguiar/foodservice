@@ -1,6 +1,8 @@
 package com.gestaosimples.servico.domain.enuns;
 
 public enum PerfilEnum {
+    M("m", "ROLE_ADMIN_MASTER"), //
+    E("E", "ROLE_ADMIN_EMPRESA"), //
     A("A", "ROLE_ADMIN"), //
     C("C", "ROLE_CLIENTE");
 
