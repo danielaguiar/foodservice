@@ -1,8 +1,9 @@
 package com.gestaosimples.servico.domain.dto;
 
 import java.io.Serializable;
-import com.gestaosimples.servico.domain.Cliente;
-import com.gestaosimples.servico.domain.enuns.TipoClienteEnum;
+import com.gestaosimples.arquitetura.util.ObjetoUtil;
+import com.gestaosimples.servico.domain.corp.PessoaFisica;
+import com.gestaosimples.servico.domain.enuns.TipoPessoaEnum;
 import com.gestaosimples.servico.validation.ClienteValidation;
 
 @ClienteValidation
@@ -13,57 +14,39 @@ public class ClienteDTO implements Serializable {
 
     private Long id;
 
-    private String nome;
+    private String nmPessoaFisica;
 
-    private String email;
+    private String nrCpf;
 
-    private String cpfOuCnpj;
+    private TipoPessoaEnum tipo;
 
-    private String tipo;
+    private EnderecoDTO endereco;
 
-    private String senha;
-
-    private String logradouro;
-
-    private String numero;
-
-    private String complemento;
-
-    private String bairro;
-
-    private String cep;
-
-    private String telefone1;
-
-    private String telefone2;
-
-    private String telefone3;
-
-    private Long idCidade;
+    private TelefoneDTO telefone;
 
     public ClienteDTO() {
     }
 
-    public ClienteDTO(Cliente obj) {
+    public ClienteDTO(PessoaFisica pessoa) {
+        this.id = pessoa.getIdPessoa();
+        this.nmPessoaFisica = pessoa.getNmPessoaFisica();
+        this.nrCpf = pessoa.getNrCpf();
+        this.tipo = tipo.F;
+        if (!ObjetoUtil.isVazio(pessoa.getEnderecos())) {
+            this.endereco = new EnderecoDTO(pessoa.getEnderecos().iterator().next());
+        }
+        this.telefone = new TelefoneDTO(pessoa.getTelefone());
+
     }
 
-    public ClienteDTO(Long id, String nome, String email, String cpfOuCnpj, String tipo, String logradouro, String numero, String complemento, String bairro,
-        String cep, String telefone1, String telefone2, String telefone3, Long idCidade) {
+    public ClienteDTO(Long id, String nmPessoaFisica, String nrCpf, TipoPessoaEnum tipo, EnderecoDTO endereco, TelefoneDTO telefone) {
         super();
         this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.cpfOuCnpj = cpfOuCnpj;
+        this.nmPessoaFisica = nmPessoaFisica;
+        this.nrCpf = nrCpf;
         this.tipo = tipo;
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.complemento = complemento;
-        this.bairro = bairro;
-        this.cep = cep;
-        this.telefone1 = telefone1;
-        this.telefone2 = telefone2;
-        this.telefone3 = telefone3;
-        this.idCidade = idCidade;
+        this.endereco = endereco;
+        this.telefone = telefone;
     }
 
     public Long getId() {
@@ -74,124 +57,44 @@ public class ClienteDTO implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNmPessoaFisica() {
+        return nmPessoaFisica;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNmPessoaFisica(String nmPessoaFisica) {
+        this.nmPessoaFisica = nmPessoaFisica;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNrCpf() {
+        return nrCpf;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNrCpf(String nrCpf) {
+        this.nrCpf = nrCpf;
     }
 
-    public String getCpfOuCnpj() {
-        return cpfOuCnpj;
-    }
-
-    public void setCpfOuCnpj(String cpfOuCnpj) {
-        this.cpfOuCnpj = cpfOuCnpj;
-    }
-
-    public String getTipo() {
+    public TipoPessoaEnum getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoPessoaEnum tipo) {
         this.tipo = tipo;
     }
 
-    public String getLogradouro() {
-        return logradouro;
+    public EnderecoDTO getEndereco() {
+        return endereco;
     }
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public void setEndereco(EnderecoDTO endereco) {
+        this.endereco = endereco;
     }
 
-    public String getNumero() {
-        return numero;
+    public TelefoneDTO getTelefone() {
+        return telefone;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getTelefone1() {
-        return telefone1;
-    }
-
-    public void setTelefone1(String telefone1) {
-        this.telefone1 = telefone1;
-    }
-
-    public String getTelefone2() {
-        return telefone2;
-    }
-
-    public void setTelefone2(String telefone2) {
-        this.telefone2 = telefone2;
-    }
-
-    public String getTelefone3() {
-        return telefone3;
-    }
-
-    public void setTelefone3(String telefone3) {
-        this.telefone3 = telefone3;
-    }
-
-    public Long getIdCidade() {
-        return idCidade;
-    }
-
-    public void setIdCidade(Long idCidade) {
-        this.idCidade = idCidade;
-    }
-
-    public boolean isPessoaFisica() {
-        return tipo != null && tipo.equals(TipoClienteEnum.F.getCodigo());
-    }
-
-    public boolean isPessoaJuridica() {
-        return tipo != null && tipo.equals(TipoClienteEnum.J.getCodigo());
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setTelefone(TelefoneDTO telefone) {
+        this.telefone = telefone;
     }
 
 }

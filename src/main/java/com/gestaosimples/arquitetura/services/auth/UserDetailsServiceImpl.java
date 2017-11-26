@@ -7,17 +7,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.security.UserSS;
 import com.gestaosimples.servico.domain.Cliente;
-import com.gestaosimples.servico.repositories.ClienteRepository;
+import com.gestaosimples.servico.repositories.PessoaFisicaRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private PessoaFisicaRepository clienteRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Cliente cliente = clienteRepository.findByEmail(email);
+        Cliente cliente = null;
+        //clienteRepository.findByEmail(email);
         if (cliente == null) {
             throw new UsernameNotFoundException(email);
         }

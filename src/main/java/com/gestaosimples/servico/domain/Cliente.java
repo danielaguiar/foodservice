@@ -22,7 +22,7 @@ import org.hibernate.annotations.NotFoundAction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gestaosimples.servico.domain.corp.Endereco;
 import com.gestaosimples.servico.domain.enuns.PerfilEnum;
-import com.gestaosimples.servico.domain.enuns.TipoClienteEnum;
+import com.gestaosimples.servico.domain.enuns.TipoPessoaEnum;
 
 @Entity(name = "t_cliente")
 public class Cliente implements Serializable {
@@ -47,7 +47,7 @@ public class Cliente implements Serializable {
     @Enumerated(EnumType.STRING)
     @NotFound(action = NotFoundAction.IGNORE)
     @Column(name = "cl_tipo_cliente", length = 1)
-    private TipoClienteEnum tipo;
+    private TipoPessoaEnum tipo;
 
     @JsonIgnore
     @Column(name = "ds_senha")
@@ -57,8 +57,9 @@ public class Cliente implements Serializable {
     @Transient
     private List<Endereco> enderecos = new ArrayList<Endereco>();
 
-    @ElementCollection
-    @CollectionTable(name = "t_telefone")
+    @Transient
+    //@ElementCollection
+    //@CollectionTable(name = "t_telefone")
     private Set<String> telefones = new HashSet<String>();
 
     @Enumerated(EnumType.STRING)
@@ -74,7 +75,7 @@ public class Cliente implements Serializable {
         addPerfil(PerfilEnum.C);
     }
 
-    public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoClienteEnum tipo, String senha) {
+    public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoPessoaEnum tipo, String senha) {
         super();
         this.id = id;
         this.nome = nome;
@@ -85,7 +86,7 @@ public class Cliente implements Serializable {
         addPerfil(PerfilEnum.C);
     }
 
-    public Cliente(String nome, String email, String cpfOuCnpj, TipoClienteEnum tipo) {
+    public Cliente(String nome, String email, String cpfOuCnpj, TipoPessoaEnum tipo) {
         super();
         this.nome = nome;
         this.email = email;
@@ -94,7 +95,7 @@ public class Cliente implements Serializable {
         addPerfil(PerfilEnum.C);
     }
 
-    public Cliente(String nome, String email, String cpfOuCnpj, TipoClienteEnum tipo, String senha) {
+    public Cliente(String nome, String email, String cpfOuCnpj, TipoPessoaEnum tipo, String senha) {
         super();
         this.nome = nome;
         this.email = email;
@@ -142,11 +143,11 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
     }
 
-    public TipoClienteEnum getTipo() {
+    public TipoPessoaEnum getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoClienteEnum tipo) {
+    public void setTipo(TipoPessoaEnum tipo) {
         this.tipo = tipo;
     }
 

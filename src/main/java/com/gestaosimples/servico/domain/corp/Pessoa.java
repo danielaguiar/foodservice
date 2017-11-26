@@ -1,6 +1,7 @@
 package com.gestaosimples.servico.domain.corp;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -10,8 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import com.gestaosimples.servico.domain.Telefone;
 
 @Entity
 @Table(name = "T_PESSOA")
@@ -22,10 +25,13 @@ public class Pessoa implements Serializable {
     private static final long serialVersionUID = -5148742405028232963L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_PESSOA", nullable = false)
-    @SequenceGenerator(name = "SQ_PESSOA", sequenceName = "CORPORATIVO_MAPA.SQ_PESSOA", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_PESSOA")
     protected Long idPessoa;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoa")
+    @JoinColumn(name = "id_telefone", referencedColumnName = "id_telefone", nullable = true)
+    private Telefone telefone;
 
     public Pessoa() {
     }
@@ -66,6 +72,14 @@ public class Pessoa implements Serializable {
         } else if (!idPessoa.equals(other.idPessoa))
             return false;
         return true;
+    }
+
+    public Telefone getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
     }
 
 }

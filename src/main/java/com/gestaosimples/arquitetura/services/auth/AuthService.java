@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.mail.EmailService;
 import com.gestaosimples.servico.domain.Cliente;
-import com.gestaosimples.servico.repositories.ClienteRepository;
+import com.gestaosimples.servico.repositories.PessoaFisicaRepository;
 
 @Service
 public class AuthService {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private PessoaFisicaRepository clienteRepository;
 
     @Autowired
     private BCryptPasswordEncoder be;
@@ -25,14 +25,14 @@ public class AuthService {
 
     public void sendNewPassword(String email) {
 
-        Cliente cliente = clienteRepository.findByEmail(email);
+        Cliente cliente = null;//clienteRepository.findByEmail(email);
         if (cliente == null) {
             throw new ObjectNotFoundException("email não localizado!!");
         }
 
         String newPass = newPassword();
         cliente.setSenha(be.encode(newPass));
-        clienteRepository.save(cliente);
+        //clienteRepository.save(cliente);
         emailService.sendNewPasswordEmail(cliente, newPass);
     }
 

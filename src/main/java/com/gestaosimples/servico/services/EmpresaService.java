@@ -47,9 +47,8 @@ public class EmpresaService extends AbstractService {
     }
 
     public EmpresaDTO insert(PessoaJuridica pessoa) {
-        repo.save(pessoa);
-        enderecoRepository.save(pessoa.getEndereco());
-        return fromPessoaJuridica(pessoa);
+        PessoaJuridica pessoaInserida = repo.save(pessoa);
+        return fromPessoaJuridica(pessoaInserida);
     }
 
     public EmpresaDTO update(EmpresaDTO pessoaDTO) {

@@ -8,12 +8,11 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
-import com.gestaosimples.arquitetura.util.CPFCNPJUtil;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.arquitetura.validation.FieldMessage;
 import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
-import com.gestaosimples.servico.repositories.ClienteRepository;
+import com.gestaosimples.servico.repositories.PessoaFisicaRepository;
 import com.gestaosimples.servico.validation.ClienteValidation;
 
 public class ClienteValidator implements ConstraintValidator<ClienteValidation, ClienteDTO> {
@@ -22,7 +21,7 @@ public class ClienteValidator implements ConstraintValidator<ClienteValidation, 
     HttpServletRequest request;
 
     @Autowired
-    private ClienteRepository repo;
+    private PessoaFisicaRepository repo;
 
     @Override
     public void initialize(ClienteValidation arg) {
@@ -49,14 +48,18 @@ public class ClienteValidator implements ConstraintValidator<ClienteValidation, 
 
     @SuppressWarnings("unchecked")
     private Long recuperarIdCliente() {
-        Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-        return Long.parseLong(map.get("id"));
+        try {
+            Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+            return Long.parseLong(map.get("id"));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private void insertValidation(ClienteDTO dto, List<FieldMessage> list) {
-        if (dto.isPessoaFisica() && !CPFCNPJUtil.isValidarCpfCnpj(dto.getCpfOuCnpj())) {
-            list.add(new FieldMessage("cpfOuCnpj", CPFCNPJUtil.isCpf(dto.getCpfOuCnpj()) ? "CPF inválido" : "CNPJ inválido"));
-        }
+        // if (dto.isPessoaFisica() && !CPFCNPJUtil.isValidarCpfCnpj(dto.getCpfOuCnpj())) {
+        //     list.add(new FieldMessage("cpfOuCnpj", CPFCNPJUtil.isCpf(dto.getCpfOuCnpj()) ? "CPF inválido" : "CNPJ inválido"));
+        // }
 
         validarEmail(dto, list);
     }
@@ -65,7 +68,7 @@ public class ClienteValidator implements ConstraintValidator<ClienteValidation, 
     }
 
     private void validarEmail(ClienteDTO dto, List<FieldMessage> list) {
-        Cliente aux = repo.findByEmail(dto.getEmail());
+        Cliente aux = null;//repo.findByEmail(dto.getEmail());
         if (aux != null) {
             list.add(new FieldMessage("email", "Email já existente"));
         }

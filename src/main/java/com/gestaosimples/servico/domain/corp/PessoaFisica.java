@@ -1,10 +1,12 @@
 package com.gestaosimples.servico.domain.corp;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Set;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -15,6 +17,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import com.gestaosimples.servico.domain.Telefone;
+import com.gestaosimples.servico.domain.dto.ClienteDTO;
 import com.gestaosimples.servico.domain.enuns.SexoEnum;
 
 @Entity
@@ -26,9 +30,9 @@ public class PessoaFisica extends Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "NR_PESSOA_FISICA")
-    private String nmPessoaFisca;
+    private String nmPessoaFisica;
 
-    @Column(name = "NR_CPF", unique = true)
+    @Column(name = "NR_CPF")
     private String nrCpf;
 
     @Enumerated(EnumType.STRING)
@@ -48,8 +52,8 @@ public class PessoaFisica extends Pessoa implements Serializable {
     @Column(name = "NR_RG", length = 15, nullable = true)
     private String nrRg;
 
-    @OneToMany(mappedBy = "pessoa")
-    private Set<Endereco> enderecos;
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private List<Endereco> enderecos = new ArrayList<>();
 
     public PessoaFisica() {
     }
@@ -60,17 +64,26 @@ public class PessoaFisica extends Pessoa implements Serializable {
 
     public PessoaFisica(Long idPessoa, String nmPessoaFisca, String nrCpf) {
         super(idPessoa);
-        this.nmPessoaFisca = nmPessoaFisca;
+        this.nmPessoaFisica = nmPessoaFisca;
         this.nrCpf = nrCpf;
 
     }
 
-    public String getNmPessoaFisca() {
-        return nmPessoaFisca;
+    public PessoaFisica(ClienteDTO dto) {
+        this.idPessoa = dto.getId();
+        this.nrCpf = dto.getNrCpf();
+        this.nmPessoaFisica = dto.getNmPessoaFisica();
+        this.setTelefone(new Telefone(dto.getTelefone(), this));
+        this.enderecos = new ArrayList<>();
+        enderecos.add(new Endereco(dto.getEndereco(), this));
     }
 
-    public void setNmPessoaFisca(String nmPessoaFisca) {
-        this.nmPessoaFisca = nmPessoaFisca;
+    public String getNmPessoaFisica() {
+        return nmPessoaFisica;
+    }
+
+    public void setNmPessoaFisica(String nmPessoaFisica) {
+        this.nmPessoaFisica = nmPessoaFisica;
     }
 
     public String getNrCpf() {
@@ -119,6 +132,14 @@ public class PessoaFisica extends Pessoa implements Serializable {
 
     public void setNrRg(String nrRg) {
         this.nrRg = nrRg;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
     }
 
     public void setIdade(int idade) {

@@ -43,7 +43,6 @@ public class PessoaJuridicaService {
 
     public PessoaJuridica insert(PessoaJuridica pj) {
         pj = repo.save(pj);
-        enderecoRepository.save(pj.getEndereco());
         return pj;
     }
 
