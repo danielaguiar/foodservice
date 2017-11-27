@@ -38,7 +38,7 @@ public class EmpresaService extends AbstractService {
     public EmpresaDTO find(Long id) {
 
         UserSS user = UserService.getUsuarioLogado();
-        if (UserService.isUsuarioLogadoAdmin() && !user.getId().equals(id)) {
+        if (!UserService.isUsuarioLogadoAdminMaster() && !user.getId().equals(id)) {
             throw new AuthorizationException("operação no permitida");
         }
 

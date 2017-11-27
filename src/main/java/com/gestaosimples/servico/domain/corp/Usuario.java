@@ -1,11 +1,14 @@
 package com.gestaosimples.servico.domain.corp;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.servico.domain.enuns.PerfilEnum;
 
 @Entity
@@ -40,6 +44,7 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_pessoa")
     private Pessoa pessoa;
 
+    @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "t_usuario_perfil", joinColumns = @JoinColumn(name = "id_usuario_perfil"))
     private Set<PerfilEnum> perfis = new HashSet<PerfilEnum>();
@@ -54,6 +59,15 @@ public class Usuario implements Serializable {
         this.perfis.add(perfil);
     }
 
+    public Usuario(String login, String senha, PerfilEnum[] perfis) {
+        super();
+        this.login = login;
+        this.senha = senha;
+        if (!ObjetoUtil.isVazio(perfis)) {
+            this.perfis.addAll(Arrays.asList(perfis));
+        }
+    }
+
     public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, PerfilEnum perfil) {
         super();
         this.login = login;
@@ -61,6 +75,17 @@ public class Usuario implements Serializable {
         this.empresa = empresa;
         this.pessoa = pessoa;
         this.perfis.add(perfil);
+    }
+
+    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, PerfilEnum[] perfis) {
+        super();
+        this.login = login;
+        this.senha = senha;
+        this.empresa = empresa;
+        this.pessoa = pessoa;
+        if (!ObjetoUtil.isVazio(perfis)) {
+            this.perfis.addAll(Arrays.asList(perfis));
+        }
     }
 
     public Long getId() {

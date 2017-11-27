@@ -20,6 +20,14 @@ public class UserService {
         return authenticated();
     }
 
+    public static boolean isUsuarioLogadoAdminOrAdminMaster() {
+        return isUsuarioLogadoAdmin() || isUsuarioLogadoAdminMaster();
+    }
+
+    public static boolean isUsuarioLogadoAdminMaster() {
+        return getUsuarioLogado() != null && getUsuarioLogado().hasRole(PerfilEnum.M);
+    }
+
     public static boolean isUsuarioLogadoAdmin() {
         return getUsuarioLogado() != null && getUsuarioLogado().hasRole(PerfilEnum.A);
     }

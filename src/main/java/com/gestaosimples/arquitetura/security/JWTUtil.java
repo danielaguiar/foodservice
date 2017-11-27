@@ -1,7 +1,10 @@
 package com.gestaosimples.arquitetura.security;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import io.jsonwebtoken.Claims;
@@ -21,10 +24,10 @@ public class JWTUtil {
 
         return Jwts.builder().setSubject(user.getUsername()) //
             .setExpiration(new Date(System.currentTimeMillis() + expiration)) //
-            .signWith(SignatureAlgorithm.HS512, secret.getBytes()) //
-            //.setClaims(claims) //
+            .signWith(SignatureAlgorithm.HS256, secret.getBytes()) //
             .claim("idEmpresa", user.getIdEmpresa()) //
-            .claim("idUsuario", user.getId()) //
+            //.claim("idUsuario", user.getId()) //
+            //.claim("roles", user.getAuthorities().toString()) //
             .compact();
     }
 
@@ -56,6 +59,21 @@ public class JWTUtil {
             return (Long) id;
         }
         return null;
+    }
+
+    public List<SimpleGrantedAuthority> getRoles(String token) {
+        Claims claims = getClaims(token);
+        if (claims != null && !ObjetoUtil.isVazio(claims.get("roles"))) {
+            List<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
+            String id = (String) claims.get("roles");
+            String[] role = id.replace("[", "").replace("]", "").split(",");
+            for (String r : role) {
+                roles.add(new SimpleGrantedAuthority(r));
+            }
+            return roles;
+        }
+        return null;
+
     }
 
     private Claims getClaims(String token) {

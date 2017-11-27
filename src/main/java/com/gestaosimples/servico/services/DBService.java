@@ -57,7 +57,7 @@ public class DBService {
 
         TelefoneDTO telefone1 = new TelefoneDTO(null, "6136051086", "61996863636", "61996863636");
         EnderecoDTO endereco1 = new EnderecoDTO(null, "sq 15 quadra 12 casa", "92", "", "centro", "72880576", new Cidade(1l));
-        Usuario usuario1 = new Usuario("gestaosimples1", pe.encode("123"), new Pessoa(1L), new Pessoa(1L), PerfilEnum.M);
+        Usuario usuario1 = new Usuario("gestaosimples1", pe.encode("123"), new Pessoa(1L), new Pessoa(1L), new PerfilEnum[] {PerfilEnum.M, PerfilEnum.A});
         Email email1 = new Email("admin@gestaosimples.com");
 
         EmpresaDTO emp1 =
