@@ -25,7 +25,6 @@ public class EmpresaDTO implements Serializable {
 
     private TipoPessoaEnum tipo;
 
-    @JsonIgnore
     private Email email;
 
     @JsonIgnore

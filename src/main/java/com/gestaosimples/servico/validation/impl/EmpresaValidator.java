@@ -8,11 +8,11 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
+import com.gestaosimples.arquitetura.util.CPFCNPJUtil;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.arquitetura.validation.FieldMessage;
-import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
-import com.gestaosimples.servico.repositories.PessoaFisicaRepository;
+import com.gestaosimples.servico.services.EmpresaService;
 import com.gestaosimples.servico.validation.EmpresaValidation;
 
 public class EmpresaValidator implements ConstraintValidator<EmpresaValidation, EmpresaDTO> {
@@ -21,7 +21,7 @@ public class EmpresaValidator implements ConstraintValidator<EmpresaValidation, 
     HttpServletRequest request;
 
     @Autowired
-    private PessoaFisicaRepository repo;
+    private EmpresaService empresaService;
 
     @Override
     public void initialize(EmpresaValidation arg) {
@@ -57,22 +57,34 @@ public class EmpresaValidator implements ConstraintValidator<EmpresaValidation, 
     }
 
     private void insertValidation(EmpresaDTO dto, List<FieldMessage> list) {
-        //if (dto.isPessoaFisica() && !CPFCNPJUtil.isValidarCpfCnpj(dto.getCpfOuCnpj())) {
-        //    list.add(new FieldMessage("cpfOuCnpj", CPFCNPJUtil.isCpf(dto.getCpfOuCnpj()) ? "CPF inválido" : "CNPJ inválido"));
-        //}
+        if (ObjetoUtil.isVazio(dto.getNmRazaoSocial())) {
+            list.add(new FieldMessage("nmRazaoSocial", "O campo Razão Social é obrigatório"));
+        }
 
-        validarEmail(dto, list);
+        if (ObjetoUtil.isVazio(dto.getNrCnpj())) {
+            list.add(new FieldMessage("nmRazaoSocial", "O campo CNPJ é obrigatório"));
+        } else if (!CPFCNPJUtil.isCnpj(dto.getNrCnpj())) {
+            list.add(new FieldMessage("nmRazaoSocial", "O CNPJ está inválido"));
+        } else if (empresaService.isCNPJUtilizado(dto.getNrCnpj())) {
+            list.add(new FieldMessage("nmRazaoSocial", "O CNPJ " + dto.getNrCnpj() + " já está sendo utilizado"));
+        }
+
+        if (ObjetoUtil.isVazio(dto.getEmail())) {
+            list.add(new FieldMessage("email", "O campo email é obrigatório"));
+        } else if (dto.getEmail() != null && empresaService.isEmailUtilizado(dto.getEmail().getEdEmail())) {
+            list.add(new FieldMessage("email", "O e-mail " + dto.getEmail().getEdEmail() + " já está sendo utilizado"));
+        }
+
+        if (ObjetoUtil.isVazio(dto.getEndereco())) {
+            list.add(new FieldMessage("endereco", "O campo endereco é obrigatório"));
+        }
+        if (ObjetoUtil.isVazio(dto.getTelefone())) {
+            list.add(new FieldMessage("telefone", "O campo telefone é obrigatório"));
+        }
     }
 
     private void updateValidation(EmpresaDTO dto, List<FieldMessage> list) {
 
-    }
-
-    private void validarEmail(EmpresaDTO dto, List<FieldMessage> list) {
-        Cliente aux = null;//repo.findByEmail(dto.getEmail());
-        if (aux != null) {
-            list.add(new FieldMessage("email", "Email já existente"));
-        }
     }
 
 }

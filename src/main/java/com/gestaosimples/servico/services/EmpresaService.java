@@ -13,6 +13,7 @@ import com.gestaosimples.arquitetura.exceptions.DataIntegrityException;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.security.UserSS;
 import com.gestaosimples.arquitetura.services.auth.UserService;
+import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.servico.domain.corp.PessoaJuridica;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
 import com.gestaosimples.servico.repositories.EmpresaRepository;
@@ -91,5 +92,15 @@ public class EmpresaService extends AbstractService {
 
     public PessoaJuridica fromDTO(EmpresaDTO dto) {
         return new PessoaJuridica(dto);
+    }
+
+    public boolean isCNPJUtilizado(String nrCnpj) {
+        PessoaJuridica pessoa = repo.findByNrCnpj(nrCnpj);
+        return !ObjetoUtil.isVazio(pessoa);
+    }
+
+    public boolean isEmailUtilizado(String email) {
+        PessoaJuridica pessoa = repo.findByEmailEdEmail(email);
+        return !ObjetoUtil.isVazio(pessoa);
     }
 }

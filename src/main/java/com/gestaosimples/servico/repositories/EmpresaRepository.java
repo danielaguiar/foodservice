@@ -7,4 +7,8 @@ import com.gestaosimples.servico.domain.corp.PessoaJuridica;
 @Repository
 public interface EmpresaRepository extends JpaRepository<PessoaJuridica, Long> {
 
+    PessoaJuridica findByNrCnpj(String nrCnpj);
+
+    PessoaJuridica findByEmailEdEmail(String email);
+
 }

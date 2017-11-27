@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "t_email")
@@ -24,6 +25,7 @@ public class Email implements Serializable {
 
     @MapsId
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
     private Pessoa pessoa;
 

@@ -61,12 +61,12 @@ public class DBService {
         Email email1 = new Email("admin@gestaosimples.com");
 
         EmpresaDTO emp1 =
-            new EmpresaDTO(null, "gestao simples", "network", "01508063000163", TipoPessoaEnum.J.getCodigo(), endereco1, telefone1, email1, usuario1);
+            new EmpresaDTO(null, "gestao simples", "network", "96044589000107", TipoPessoaEnum.J.getCodigo(), endereco1, telefone1, email1, usuario1);
 
         TelefoneDTO telefone2 = new TelefoneDTO(null, "6136051086", "61996863636", "61996863636");
         EnderecoDTO endereco2 = new EnderecoDTO(null, "sq 13 quadra 09 lota", "01 C", "", "centro", "72880576", new Cidade(1l));
         Usuario usuario2 = new Usuario("gestaosimples2", pe.encode("123"), PerfilEnum.M);
-        Email email2 = new Email("admin@gestaosimples.com");
+        Email email2 = new Email("admin1@gestaosimples.com");
 
         EmpresaDTO emp2 =
             new EmpresaDTO(null, "gestao simples", "network", "01508063000163", TipoPessoaEnum.J.getCodigo(), endereco2, telefone2, email2, usuario2);
