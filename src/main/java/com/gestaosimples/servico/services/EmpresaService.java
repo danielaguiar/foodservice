@@ -61,8 +61,7 @@ public class EmpresaService extends AbstractService {
     }
 
     private void updataData(PessoaJuridica pessoa, PessoaJuridica pessoaBanco) {
-        //pessoaBanco.setNome(pessoaAtual.getNome());
-        //pessoaBanco.setEmail(pessoaAtual.getEmail());
+        pessoaBanco.setNmFantasia(pessoa.getNmFantasia());
     }
 
     public void delete(Long id) {

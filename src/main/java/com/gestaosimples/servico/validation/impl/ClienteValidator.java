@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.arquitetura.validation.FieldMessage;
-import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
+import com.gestaosimples.servico.repositories.EmailRepository;
 import com.gestaosimples.servico.repositories.PessoaFisicaRepository;
 import com.gestaosimples.servico.validation.ClienteValidation;
 
@@ -22,6 +22,9 @@ public class ClienteValidator implements ConstraintValidator<ClienteValidation, 
 
     @Autowired
     private PessoaFisicaRepository repo;
+
+    @Autowired
+    private EmailRepository EmailRepository;
 
     @Override
     public void initialize(ClienteValidation arg) {
@@ -57,21 +60,11 @@ public class ClienteValidator implements ConstraintValidator<ClienteValidation, 
     }
 
     private void insertValidation(ClienteDTO dto, List<FieldMessage> list) {
-        // if (dto.isPessoaFisica() && !CPFCNPJUtil.isValidarCpfCnpj(dto.getCpfOuCnpj())) {
-        //     list.add(new FieldMessage("cpfOuCnpj", CPFCNPJUtil.isCpf(dto.getCpfOuCnpj()) ? "CPF inválido" : "CNPJ inválido"));
-        // }
 
-        validarEmail(dto, list);
     }
 
     private void updateValidation(ClienteDTO dto, List<FieldMessage> list) {
-    }
 
-    private void validarEmail(ClienteDTO dto, List<FieldMessage> list) {
-        Cliente aux = null;//repo.findByEmail(dto.getEmail());
-        if (aux != null) {
-            list.add(new FieldMessage("email", "Email já existente"));
-        }
     }
 
 }

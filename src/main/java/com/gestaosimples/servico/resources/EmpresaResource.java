@@ -54,7 +54,8 @@ public class EmpresaResource extends AbstractResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody EmpresaDTO empresa) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody EmpresaDTO empresa) {
+        empresa.setId(id);
         service.update(empresa);
         return this.noContentResponse();
     }
