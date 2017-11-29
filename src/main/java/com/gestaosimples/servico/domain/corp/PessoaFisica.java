@@ -1,24 +1,20 @@
 package com.gestaosimples.servico.domain.corp;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
-import com.gestaosimples.servico.domain.enuns.SexoEnum;
+import com.gestaosimples.servico.domain.enuns.Sexo;
 
 @Entity
 @Table(name = "T_PESSOA_FISICA")
@@ -36,7 +32,7 @@ public class PessoaFisica extends Pessoa implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "CS_SEXO", length = 1, nullable = true)
-    private SexoEnum csSexo;
+    private Sexo csSexo;
 
     @Column(name = "DT_NASCIMENTO", nullable = true)
     @Temporal(TemporalType.DATE)
@@ -50,9 +46,6 @@ public class PessoaFisica extends Pessoa implements Serializable {
 
     @Column(name = "NR_RG", length = 15, nullable = true)
     private String nrRg;
-
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    private List<Endereco> enderecos = new ArrayList<>();
 
     public PessoaFisica() {
     }
@@ -69,12 +62,6 @@ public class PessoaFisica extends Pessoa implements Serializable {
     }
 
     public PessoaFisica(ClienteDTO dto) {
-        this.idPessoa = dto.getId();
-        this.nrCpf = dto.getNrCpf();
-        this.nmPessoaFisica = dto.getNmPessoaFisica();
-        this.setTelefone(new Telefone(dto.getTelefone(), this));
-        this.enderecos = new ArrayList<>();
-        enderecos.add(new Endereco(dto.getEndereco(), this));
     }
 
     public String getNmPessoaFisica() {
@@ -93,11 +80,11 @@ public class PessoaFisica extends Pessoa implements Serializable {
         this.nrCpf = nrCpf;
     }
 
-    public SexoEnum getCsSexo() {
+    public Sexo getCsSexo() {
         return csSexo;
     }
 
-    public void setCsSexo(SexoEnum csSexo) {
+    public void setCsSexo(Sexo csSexo) {
         this.csSexo = csSexo;
     }
 
@@ -131,14 +118,6 @@ public class PessoaFisica extends Pessoa implements Serializable {
 
     public void setNrRg(String nrRg) {
         this.nrRg = nrRg;
-    }
-
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
     }
 
     public void setIdade(int idade) {

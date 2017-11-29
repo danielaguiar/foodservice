@@ -3,7 +3,7 @@ package com.gestaosimples.arquitetura.services.auth;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.security.UserSS;
-import com.gestaosimples.servico.domain.enuns.PerfilEnum;
+import com.gestaosimples.servico.domain.enuns.Perfil;
 
 @Service
 public class UserService {
@@ -25,10 +25,10 @@ public class UserService {
     }
 
     public static boolean isUsuarioLogadoAdminMaster() {
-        return getUsuarioLogado() != null && getUsuarioLogado().hasRole(PerfilEnum.M);
+        return getUsuarioLogado() != null && getUsuarioLogado().hasRole(Perfil.M);
     }
 
     public static boolean isUsuarioLogadoAdmin() {
-        return getUsuarioLogado() != null && getUsuarioLogado().hasRole(PerfilEnum.A);
+        return getUsuarioLogado() != null && getUsuarioLogado().hasRole(Perfil.A);
     }
 }

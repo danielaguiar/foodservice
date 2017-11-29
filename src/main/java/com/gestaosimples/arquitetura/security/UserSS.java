@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.gestaosimples.servico.domain.corp.Usuario;
-import com.gestaosimples.servico.domain.enuns.PerfilEnum;
+import com.gestaosimples.servico.domain.enuns.Perfil;
 
 public class UserSS implements UserDetails {
 
@@ -31,7 +31,7 @@ public class UserSS implements UserDetails {
         this.authorities = usuario.getPerfis().stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
     }
 
-    public UserSS(Long id, String login, String senha, Set<PerfilEnum> perfis) {
+    public UserSS(Long id, String login, String senha, Set<Perfil> perfis) {
         super();
         this.id = id;
         this.login = login;
@@ -78,7 +78,7 @@ public class UserSS implements UserDetails {
         return true;
     }
 
-    public boolean hasRole(PerfilEnum perfil) {
+    public boolean hasRole(Perfil perfil) {
         return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
     }
 

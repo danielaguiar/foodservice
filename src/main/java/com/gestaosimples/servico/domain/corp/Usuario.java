@@ -17,7 +17,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
-import com.gestaosimples.servico.domain.enuns.PerfilEnum;
+import com.gestaosimples.servico.domain.enuns.Perfil;
 
 @Entity
 @Table(name = "t_usuario")
@@ -47,19 +47,19 @@ public class Usuario implements Serializable {
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "t_usuario_perfil", joinColumns = @JoinColumn(name = "id_usuario_perfil"))
-    private Set<PerfilEnum> perfis = new HashSet<PerfilEnum>();
+    private Set<Perfil> perfis = new HashSet<Perfil>();
 
     public Usuario() {
     }
 
-    public Usuario(String login, String senha, PerfilEnum perfil) {
+    public Usuario(String login, String senha, Perfil perfil) {
         super();
         this.login = login;
         this.senha = senha;
         this.perfis.add(perfil);
     }
 
-    public Usuario(String login, String senha, PerfilEnum[] perfis) {
+    public Usuario(String login, String senha, Perfil[] perfis) {
         super();
         this.login = login;
         this.senha = senha;
@@ -68,7 +68,7 @@ public class Usuario implements Serializable {
         }
     }
 
-    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, PerfilEnum perfil) {
+    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, Perfil perfil) {
         super();
         this.login = login;
         this.senha = senha;
@@ -77,7 +77,7 @@ public class Usuario implements Serializable {
         this.perfis.add(perfil);
     }
 
-    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, PerfilEnum[] perfis) {
+    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, Perfil[] perfis) {
         super();
         this.login = login;
         this.senha = senha;
@@ -120,11 +120,11 @@ public class Usuario implements Serializable {
         this.pessoa = pessoa;
     }
 
-    public Set<PerfilEnum> getPerfis() {
+    public Set<Perfil> getPerfis() {
         return perfis;
     }
 
-    public void setPerfis(Set<PerfilEnum> perfis) {
+    public void setPerfis(Set<Perfil> perfis) {
         this.perfis = perfis;
     }
 

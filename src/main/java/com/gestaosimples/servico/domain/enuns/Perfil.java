@@ -1,6 +1,6 @@
 package com.gestaosimples.servico.domain.enuns;
 
-public enum PerfilEnum {
+public enum Perfil {
     M("m", "ROLE_ADMIN_MASTER"), //
     E("E", "ROLE_ADMIN_EMPRESA"), //
     A("A", "ROLE_ADMIN"), //
@@ -9,7 +9,7 @@ public enum PerfilEnum {
     private String codigo;
     private String descricao;
 
-    private PerfilEnum(String codigo, String descricao) {
+    private Perfil(String codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }
@@ -30,11 +30,11 @@ public enum PerfilEnum {
         this.descricao = descricao;
     }
 
-    public static PerfilEnum toEnum(String codigo) {
+    public static Perfil toEnum(String codigo) {
         if (codigo == null) {
             return null;
         }
-        for (PerfilEnum tipo : PerfilEnum.values()) {
+        for (Perfil tipo : Perfil.values()) {
             if (tipo.getCodigo().equals(codigo)) {
                 return tipo;
             }

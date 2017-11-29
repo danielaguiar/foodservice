@@ -3,7 +3,7 @@ package com.gestaosimples.servico.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.gestaosimples.servico.domain.enuns.EstadoPagamentoEnum;
+import com.gestaosimples.servico.domain.enuns.EstadoPagamento;
 
 @Entity(name = "t_pagamento_cartao")
 @JsonTypeName("pagamentoComCartao")
@@ -19,12 +19,12 @@ public class PagamentoComCartao extends Pagamento {
         super();
     }
 
-    public PagamentoComCartao(Long id, EstadoPagamentoEnum tipo, Pedido pedido, Integer numeroDeParecelas) {
+    public PagamentoComCartao(Long id, EstadoPagamento tipo, Pedido pedido, Integer numeroDeParecelas) {
         super(id, tipo, pedido);
         this.numeroDeParecelas = numeroDeParecelas;
     }
 
-    public PagamentoComCartao(EstadoPagamentoEnum tipo, Pedido pedido, Integer numeroDeParecelas) {
+    public PagamentoComCartao(EstadoPagamento tipo, Pedido pedido, Integer numeroDeParecelas) {
         super(tipo, pedido);
         this.numeroDeParecelas = numeroDeParecelas;
     }

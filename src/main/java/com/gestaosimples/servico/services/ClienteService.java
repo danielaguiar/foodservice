@@ -10,21 +10,20 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.exceptions.DataIntegrityException;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
-import com.gestaosimples.servico.domain.corp.PessoaFisica;
-import com.gestaosimples.servico.domain.corp.PessoaJuridica;
+import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
-import com.gestaosimples.servico.repositories.PessoaFisicaRepository;
+import com.gestaosimples.servico.repositories.ClienteRepository;
 
 @Service
 public class ClienteService {
 
     @Autowired
-    private PessoaFisicaRepository repo;
+    private ClienteRepository repo;
 
-    private PessoaFisica findOne(Long id) {
-        PessoaFisica pessoa = repo.findOne(id);
+    private Cliente findOne(Long id) {
+        Cliente pessoa = repo.findOne(id);
         if (pessoa == null) {
-            throw new ObjectNotFoundException("Objeto não econtrado! id: " + id + ", " + PessoaJuridica.class.getName());
+            throw new ObjectNotFoundException("Objeto não econtrado! id: " + id + ", " + Cliente.class.getName());
         }
         return pessoa;
     }
@@ -36,24 +35,24 @@ public class ClienteService {
         //    throw new AuthorizationException("operação no permitida");
         //}
 
-        PessoaFisica pessoa = findOne(id);
+        Cliente pessoa = findOne(id);
         return fromPessoaFisica(pessoa);
     }
 
-    public ClienteDTO insert(PessoaFisica pessoa) {
-        PessoaFisica pessoaInserida = repo.save(pessoa);
+    public ClienteDTO insert(Cliente cliente) {
+        Cliente pessoaInserida = repo.save(cliente);
         return fromPessoaFisica(pessoaInserida);
     }
 
     public ClienteDTO update(ClienteDTO pessoaDTO) {
-        PessoaFisica empresaBanco = findOne(pessoaDTO.getId());
-        PessoaFisica pessoa = fromDTO(pessoaDTO);
-        updataData(pessoa, empresaBanco);
-        repo.save(empresaBanco);
-        return fromPessoaFisica(empresaBanco);
+        Cliente clienteBanco = findOne(pessoaDTO.getId());
+        Cliente cliente = fromDTO(pessoaDTO);
+        updataData(cliente, clienteBanco);
+        repo.save(clienteBanco);
+        return fromPessoaFisica(clienteBanco);
     }
 
-    private void updataData(PessoaFisica pessoa, PessoaFisica pessoaBanco) {
+    private void updataData(Cliente pessoa, Cliente pessoaBanco) {
         //pessoaBanco.setNome(pessoaAtual.getNome());
         //pessoaBanco.setEmail(pessoaAtual.getEmail());
     }
@@ -68,21 +67,21 @@ public class ClienteService {
     }
 
     public List<ClienteDTO> findAll() {
-        List<PessoaFisica> findAll = repo.findAll();
+        List<Cliente> findAll = repo.findAll();
         return findAll.stream().map(x -> new ClienteDTO(x)).collect(Collectors.toList());
     }
 
     public Page<ClienteDTO> findPage(Integer page, Integer linesPerPage, String orderby, String direction) {
         PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderby);
-        Page<PessoaFisica> findAll = repo.findAll(pageRequest);
+        Page<Cliente> findAll = repo.findAll(pageRequest);
         return findAll.map(obj -> new ClienteDTO(obj));
     }
 
-    private ClienteDTO fromPessoaFisica(PessoaFisica pessoa) {
+    private ClienteDTO fromPessoaFisica(Cliente pessoa) {
         return new ClienteDTO(pessoa);
     }
 
-    public PessoaFisica fromDTO(ClienteDTO dto) {
-        return new PessoaFisica(dto);
+    public Cliente fromDTO(ClienteDTO dto) {
+        return new Cliente(dto);
     }
 }

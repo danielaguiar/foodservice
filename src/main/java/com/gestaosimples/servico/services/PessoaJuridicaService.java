@@ -14,7 +14,7 @@ import com.gestaosimples.arquitetura.security.UserSS;
 import com.gestaosimples.arquitetura.services.auth.UserService;
 import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.corp.PessoaJuridica;
-import com.gestaosimples.servico.domain.enuns.PerfilEnum;
+import com.gestaosimples.servico.domain.enuns.Perfil;
 import com.gestaosimples.servico.repositories.EnderecoRepository;
 import com.gestaosimples.servico.repositories.PessoaJuridicaRepository;
 
@@ -30,7 +30,7 @@ public class PessoaJuridicaService {
     public PessoaJuridica find(Long idPessoa) {
 
         UserSS user = UserService.getUsuarioLogado();
-        if (user == null || !user.hasRole(PerfilEnum.A) && !idPessoa.equals(user.getId())) {
+        if (user == null || !user.hasRole(Perfil.A) && !idPessoa.equals(user.getId())) {
             throw new AuthorizationException("Acesso negado");
         }
 

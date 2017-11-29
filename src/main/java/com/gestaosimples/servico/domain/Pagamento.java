@@ -15,7 +15,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.gestaosimples.servico.domain.enuns.EstadoPagamentoEnum;
+import com.gestaosimples.servico.domain.enuns.EstadoPagamento;
 
 @Entity(name = "t_pagamento")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -31,7 +31,7 @@ public abstract class Pagamento implements Serializable {
     @Enumerated(EnumType.STRING)
     @NotFound(action = NotFoundAction.IGNORE)
     @Column(name = "cl_pagamento", length = 1)
-    private EstadoPagamentoEnum tipo;
+    private EstadoPagamento tipo;
 
     @JsonIgnore
     @OneToOne
@@ -42,14 +42,14 @@ public abstract class Pagamento implements Serializable {
     public Pagamento() {
     }
 
-    public Pagamento(Long id, EstadoPagamentoEnum tipo, com.gestaosimples.servico.domain.Pedido pedido) {
+    public Pagamento(Long id, EstadoPagamento tipo, com.gestaosimples.servico.domain.Pedido pedido) {
         super();
         this.id = id;
         this.tipo = tipo;
         this.pedido = pedido;
     }
 
-    public Pagamento(EstadoPagamentoEnum tipo, com.gestaosimples.servico.domain.Pedido pedido) {
+    public Pagamento(EstadoPagamento tipo, com.gestaosimples.servico.domain.Pedido pedido) {
         super();
         this.tipo = tipo;
         this.pedido = pedido;
@@ -63,11 +63,11 @@ public abstract class Pagamento implements Serializable {
         this.id = id;
     }
 
-    public EstadoPagamentoEnum getTipo() {
+    public EstadoPagamento getTipo() {
         return tipo;
     }
 
-    public void setTipo(EstadoPagamentoEnum tipo) {
+    public void setTipo(EstadoPagamento tipo) {
         this.tipo = tipo;
     }
 

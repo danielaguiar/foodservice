@@ -2,11 +2,10 @@ package com.gestaosimples.servico.domain.dto;
 
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gestaosimples.arquitetura.util.ObjetoUtil;
+import com.gestaosimples.servico.domain.Empresa;
 import com.gestaosimples.servico.domain.corp.Email;
-import com.gestaosimples.servico.domain.corp.PessoaJuridica;
 import com.gestaosimples.servico.domain.corp.Usuario;
-import com.gestaosimples.servico.domain.enuns.TipoPessoaEnum;
+import com.gestaosimples.servico.domain.enuns.TipoPessoa;
 import com.gestaosimples.servico.validation.EmpresaValidation;
 
 @EmpresaValidation
@@ -23,7 +22,7 @@ public class EmpresaDTO implements Serializable {
 
     private String nrCnpj;
 
-    private TipoPessoaEnum tipo;
+    private TipoPessoa tipo;
 
     private Email email;
 
@@ -37,33 +36,12 @@ public class EmpresaDTO implements Serializable {
     public EmpresaDTO() {
     }
 
-    public EmpresaDTO(PessoaJuridica pessoa) {
-        this.id = pessoa.getIdPessoa();
-        this.nrCnpj = pessoa.getNrCnpj();
-        this.nmRazaoSocial = pessoa.getNmRazaoSocial();
-        this.nmFantasia = pessoa.getNmFantasia();
-        this.tipo = TipoPessoaEnum.J;
-        if (!ObjetoUtil.isVazio(pessoa.getEnderecos())) {
-            this.endereco = new EnderecoDTO(pessoa.getEnderecos().iterator().next());
-        }
-        this.telefone = new TelefoneDTO(pessoa.getTelefone());
-        this.email = pessoa.getEmail();
-        this.usuario = pessoa.getUsuario();
+    public EmpresaDTO(Empresa pessoa) {
 
     }
 
     public EmpresaDTO(Long id, String nmRazaoSocial, String nmFantasia, String cpfOuCnpj, String tipo, EnderecoDTO endereco, TelefoneDTO telefone, Email email,
         Usuario usuario) {
-        super();
-        this.id = id;
-        this.nmRazaoSocial = nmRazaoSocial;
-        this.nmFantasia = nmFantasia;
-        this.nrCnpj = cpfOuCnpj;
-        this.tipo = tipo == null ? null : TipoPessoaEnum.toEnum(tipo);
-        this.endereco = endereco;
-        this.telefone = telefone;
-        this.email = email;
-        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -98,12 +76,12 @@ public class EmpresaDTO implements Serializable {
         this.nrCnpj = nrCnpj;
     }
 
-    public TipoPessoaEnum getTipo() {
+    public TipoPessoa getTipo() {
         return tipo;
     }
 
     public void setTipo(String tipo) {
-        this.tipo = tipo == null ? null : TipoPessoaEnum.toEnum(tipo);
+        this.tipo = tipo == null ? null : TipoPessoa.toEnum(tipo);
     }
 
     public EnderecoDTO getEndereco() {
@@ -130,7 +108,7 @@ public class EmpresaDTO implements Serializable {
         this.email = email;
     }
 
-    public void setTipo(TipoPessoaEnum tipo) {
+    public void setTipo(TipoPessoa tipo) {
         this.tipo = tipo;
     }
 

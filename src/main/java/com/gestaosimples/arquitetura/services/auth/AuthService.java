@@ -6,7 +6,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.mail.EmailService;
+import com.gestaosimples.servico.domain.corp.Email;
 import com.gestaosimples.servico.domain.corp.Usuario;
+import com.gestaosimples.servico.repositories.EmailRepository;
 import com.gestaosimples.servico.repositories.UsuarioRepository;
 
 @Service
@@ -20,20 +22,26 @@ public class AuthService {
 
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private EmailRepository emailRepository;
 
     private Random rand = new Random();
 
-    public void sendNewPassword(String email) {
+    public void sendNewPassword(String edEmail) {
 
-        Usuario usuario = usuarioRepository.findByPessoaEmailEdEmail(email);
-        if (usuario == null) {
+        Email email = emailRepository.findByEdEmail(edEmail);
+        if (email == null) {
             throw new ObjectNotFoundException("email não localizado!!");
+        }
+        Usuario usuario = usuarioRepository.findOne(email.getPessoa().getIdPessoa());
+        if (usuario == null) {
+            throw new ObjectNotFoundException("usário não localizado!!");
         }
 
         String newPass = newPassword();
         usuario.setSenha(be.encode(newPass));
         usuarioRepository.save(usuario);
-        emailService.sendNewPasswordEmail(usuario.getPessoa(), newPass);
+        emailService.sendNewPasswordEmail(email, newPass);
     }
 
     private String newPassword() {

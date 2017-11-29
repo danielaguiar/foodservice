@@ -14,7 +14,7 @@ import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.security.UserSS;
 import com.gestaosimples.arquitetura.services.auth.UserService;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
-import com.gestaosimples.servico.domain.corp.PessoaJuridica;
+import com.gestaosimples.servico.domain.Empresa;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
 import com.gestaosimples.servico.repositories.EmpresaRepository;
 import com.gestaosimples.servico.repositories.EnderecoRepository;
@@ -28,10 +28,10 @@ public class EmpresaService extends AbstractService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    private PessoaJuridica findOne(Long id) {
-        PessoaJuridica pessoa = repo.findOne(id);
+    private Empresa findOne(Long id) {
+        Empresa pessoa = repo.findOne(id);
         if (pessoa == null) {
-            throw new ObjectNotFoundException("Objeto não econtrado! id: " + id + ", " + PessoaJuridica.class.getName());
+            throw new ObjectNotFoundException("Objeto não econtrado! id: " + id + ", " + Empresa.class.getName());
         }
         return pessoa;
     }
@@ -43,25 +43,25 @@ public class EmpresaService extends AbstractService {
             throw new AuthorizationException("operação no permitida");
         }
 
-        PessoaJuridica pessoa = findOne(id);
+        Empresa pessoa = findOne(id);
         return fromPessoaJuridica(pessoa);
     }
 
-    public EmpresaDTO insert(PessoaJuridica pessoa) {
-        PessoaJuridica pessoaInserida = repo.save(pessoa);
+    public EmpresaDTO insert(Empresa pessoa) {
+        Empresa pessoaInserida = repo.save(pessoa);
         return fromPessoaJuridica(pessoaInserida);
     }
 
     public EmpresaDTO update(EmpresaDTO pessoaDTO) {
-        PessoaJuridica empresaBanco = findOne(pessoaDTO.getId());
-        PessoaJuridica pessoa = fromDTO(pessoaDTO);
+        Empresa empresaBanco = findOne(pessoaDTO.getId());
+        Empresa pessoa = fromDTO(pessoaDTO);
         updataData(pessoa, empresaBanco);
         repo.save(empresaBanco);
         return fromPessoaJuridica(empresaBanco);
     }
 
-    private void updataData(PessoaJuridica pessoa, PessoaJuridica pessoaBanco) {
-        pessoaBanco.setNmFantasia(pessoa.getNmFantasia());
+    private void updataData(Empresa pessoa, Empresa pessoaBanco) {
+        //pessoaBanco.setNmFantasia(pessoa.getNmFantasia());
     }
 
     public void delete(Long id) {
@@ -74,32 +74,32 @@ public class EmpresaService extends AbstractService {
     }
 
     public List<EmpresaDTO> findAll() {
-        List<PessoaJuridica> findAll = repo.findAll();
+        List<Empresa> findAll = repo.findAll();
         List<EmpresaDTO> empresas = findAll.stream().map(x -> new EmpresaDTO(x)).collect(Collectors.toList());
         return empresas;
     }
 
     public Page<EmpresaDTO> findPage(Integer page, Integer linesPerPage, String orderby, String direction) {
         PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderby);
-        Page<PessoaJuridica> findAll = repo.findAll(pageRequest);
+        Page<Empresa> findAll = repo.findAll(pageRequest);
         return findAll.map(obj -> new EmpresaDTO(obj));
     }
 
-    private EmpresaDTO fromPessoaJuridica(PessoaJuridica pessoa) {
+    private EmpresaDTO fromPessoaJuridica(Empresa pessoa) {
         return new EmpresaDTO(pessoa);
     }
 
-    public PessoaJuridica fromDTO(EmpresaDTO dto) {
-        return new PessoaJuridica(dto);
+    public Empresa fromDTO(EmpresaDTO dto) {
+        return new Empresa(dto);
     }
 
     public boolean isCNPJUtilizado(String nrCnpj) {
-        PessoaJuridica pessoa = repo.findByNrCnpj(nrCnpj);
+        Empresa pessoa = repo.findByNrCnpj(nrCnpj);
         return !ObjetoUtil.isVazio(pessoa);
     }
 
     public boolean isEmailUtilizado(String email) {
-        PessoaJuridica pessoa = repo.findByEmailEdEmail(email);
+        Empresa pessoa = repo.findByEmailEdEmail(email);
         return !ObjetoUtil.isVazio(pessoa);
     }
 }

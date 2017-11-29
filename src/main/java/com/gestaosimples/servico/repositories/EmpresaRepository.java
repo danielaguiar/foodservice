@@ -2,13 +2,13 @@ package com.gestaosimples.servico.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.gestaosimples.servico.domain.corp.PessoaJuridica;
+import com.gestaosimples.servico.domain.Empresa;
 
 @Repository
-public interface EmpresaRepository extends JpaRepository<PessoaJuridica, Long> {
+public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
-    PessoaJuridica findByNrCnpj(String nrCnpj);
+    Empresa findByNrCnpj(String nrCnpj);
 
-    PessoaJuridica findByEmailEdEmail(String email);
+    Empresa findByEmailEdEmail(String email);
 
 }
