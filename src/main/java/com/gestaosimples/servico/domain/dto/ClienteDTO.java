@@ -1,6 +1,8 @@
 package com.gestaosimples.servico.domain.dto;
 
 import java.io.Serializable;
+import com.gestaosimples.corp.dto.EnderecoDTO;
+import com.gestaosimples.corp.dto.TelefoneDTO;
 import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.Empresa;
 import com.gestaosimples.servico.domain.enuns.TipoPessoa;

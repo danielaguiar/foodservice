@@ -14,10 +14,10 @@ import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.security.UserSS;
 import com.gestaosimples.arquitetura.services.auth.UserService;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
+import com.gestaosimples.corp.repositories.EnderecoRepository;
 import com.gestaosimples.servico.domain.Empresa;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
 import com.gestaosimples.servico.repositories.EmpresaRepository;
-import com.gestaosimples.servico.repositories.EnderecoRepository;
 
 @Service
 public class EmpresaService extends AbstractService {
@@ -94,12 +94,12 @@ public class EmpresaService extends AbstractService {
     }
 
     public boolean isCNPJUtilizado(String nrCnpj) {
-        Empresa pessoa = repo.findByNrCnpj(nrCnpj);
+        Empresa pessoa = null;//repo.findByNrCnpj(nrCnpj);
         return !ObjetoUtil.isVazio(pessoa);
     }
 
     public boolean isEmailUtilizado(String email) {
-        Empresa pessoa = repo.findByEmailEdEmail(email);
+        Empresa pessoa = null;//repo.findByEmailEdEmail(email);
         return !ObjetoUtil.isVazio(pessoa);
     }
 }

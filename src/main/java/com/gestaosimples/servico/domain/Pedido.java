@@ -17,9 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
-import com.gestaosimples.servico.domain.corp.Endereco;
+import com.gestaosimples.corp.domain.Endereco;
 
 @Entity(name = "t_pedido")
 public class Pedido implements Serializable {
@@ -43,8 +44,9 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "id_endereco_entrega")
+    //@ManyToOne
+    //@JoinColumn(name = "id_endereco_entrega")
+    @Transient
     private Endereco enderecoDeEntrega;
 
     @OneToMany(mappedBy = "id.pedido")

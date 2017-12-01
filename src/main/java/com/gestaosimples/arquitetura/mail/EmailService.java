@@ -1,8 +1,8 @@
 package com.gestaosimples.arquitetura.mail;
 
 import org.springframework.mail.SimpleMailMessage;
+import com.gestaosimples.corp.domain.Email;
 import com.gestaosimples.servico.domain.Pedido;
-import com.gestaosimples.servico.domain.corp.Email;
 
 public interface EmailService {
 

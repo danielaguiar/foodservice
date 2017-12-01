@@ -1,4 +1,4 @@
-package com.gestaosimples.servico.services;
+package com.gestaosimples.corp.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,11 @@ import com.gestaosimples.arquitetura.exceptions.DataIntegrityException;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.security.UserSS;
 import com.gestaosimples.arquitetura.services.auth.UserService;
+import com.gestaosimples.corp.domain.PessoaJuridica;
+import com.gestaosimples.corp.repositories.EnderecoRepository;
+import com.gestaosimples.corp.repositories.PessoaJuridicaRepository;
 import com.gestaosimples.servico.domain.Cliente;
-import com.gestaosimples.servico.domain.corp.PessoaJuridica;
 import com.gestaosimples.servico.domain.enuns.Perfil;
-import com.gestaosimples.servico.repositories.EnderecoRepository;
-import com.gestaosimples.servico.repositories.PessoaJuridicaRepository;
 
 @Service
 public class PessoaJuridicaService {

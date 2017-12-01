@@ -1,8 +1,8 @@
-package com.gestaosimples.servico.repositories;
+package com.gestaosimples.corp.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.gestaosimples.servico.domain.corp.Telefone;
+import com.gestaosimples.corp.domain.Telefone;
 
 @Repository
 public interface TelefoneRepository extends JpaRepository<Telefone, Long> {

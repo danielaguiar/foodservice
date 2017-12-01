@@ -1,14 +1,14 @@
-package com.gestaosimples.servico.repositories;
+package com.gestaosimples.corp.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.gestaosimples.servico.domain.corp.Usuario;
+import com.gestaosimples.corp.domain.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Usuario findByLogin(String email);
 
-    Usuario findByPessoaEmailEdEmail(String email);
+    Usuario findByEmailEdEmail(String login);
 
 }

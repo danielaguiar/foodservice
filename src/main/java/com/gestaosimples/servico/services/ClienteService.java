@@ -10,9 +10,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.exceptions.DataIntegrityException;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
+import com.gestaosimples.corp.repositories.ClienteRepository;
 import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
-import com.gestaosimples.servico.repositories.ClienteRepository;
 
 @Service
 public class ClienteService {

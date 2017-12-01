@@ -2,9 +2,11 @@ package com.gestaosimples.servico.domain.dto;
 
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gestaosimples.corp.domain.Email;
+import com.gestaosimples.corp.domain.Usuario;
+import com.gestaosimples.corp.dto.EnderecoDTO;
+import com.gestaosimples.corp.dto.TelefoneDTO;
 import com.gestaosimples.servico.domain.Empresa;
-import com.gestaosimples.servico.domain.corp.Email;
-import com.gestaosimples.servico.domain.corp.Usuario;
 import com.gestaosimples.servico.domain.enuns.TipoPessoa;
 import com.gestaosimples.servico.validation.EmpresaValidation;
 
@@ -40,7 +42,7 @@ public class EmpresaDTO implements Serializable {
 
     }
 
-    public EmpresaDTO(Long id, String nmRazaoSocial, String nmFantasia, String cpfOuCnpj, String tipo, EnderecoDTO endereco, TelefoneDTO telefone, Email email,
+    public EmpresaDTO(Long id, String nmRazaoSocial, String nmFantasia, String cpfOuCnpj, String tipo, EnderecoDTO endereco, TelefoneDTO telefone,
         Usuario usuario) {
     }
 
@@ -120,4 +122,11 @@ public class EmpresaDTO implements Serializable {
         this.usuario = usuario;
     }
 
+    public boolean isPessoaFisica() {
+        return tipo != null && tipo.equals(TipoPessoa.F);
+    }
+
+    public boolean isPessoaJuridica() {
+        return tipo != null && tipo.equals(TipoPessoa.F);
+    }
 }

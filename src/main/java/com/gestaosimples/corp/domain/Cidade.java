@@ -1,4 +1,4 @@
-package com.gestaosimples.servico.domain.corp;
+package com.gestaosimples.corp.domain;
 
 import java.io.Serializable;
 import javax.persistence.Column;

@@ -11,9 +11,9 @@ import org.springframework.web.servlet.HandlerMapping;
 import com.gestaosimples.arquitetura.util.CPFCNPJUtil;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.arquitetura.validation.FieldMessage;
-import com.gestaosimples.servico.domain.corp.Email;
+import com.gestaosimples.corp.domain.Email;
+import com.gestaosimples.corp.repositories.EmailRepository;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
-import com.gestaosimples.servico.repositories.EmailRepository;
 import com.gestaosimples.servico.services.EmpresaService;
 import com.gestaosimples.servico.validation.EmpresaValidation;
 

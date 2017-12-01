@@ -12,7 +12,7 @@ import com.gestaosimples.arquitetura.security.JWTUtil;
 import com.gestaosimples.arquitetura.security.UserSS;
 import com.gestaosimples.arquitetura.services.auth.AuthService;
 import com.gestaosimples.arquitetura.services.auth.UserService;
-import com.gestaosimples.servico.domain.dto.EmailDTO;
+import com.gestaosimples.corp.dto.EmailDTO;
 
 @RestController
 @RequestMapping(value = "/auth")

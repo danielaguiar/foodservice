@@ -7,8 +7,6 @@ import com.gestaosimples.servico.domain.Empresa;
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
-    Empresa findByNrCnpj(String nrCnpj);
-
-    Empresa findByEmailEdEmail(String email);
+    Empresa findByEmpresaNrCnpj(String nrCnpj);
 
 }

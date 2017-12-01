@@ -1,12 +1,9 @@
-package com.gestaosimples.servico.domain.corp;
+package com.gestaosimples.corp.domain;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
@@ -30,18 +27,6 @@ public class PessoaJuridica extends Pessoa implements Serializable {
 
     @Column(name = "NM_FANTASIA", length = 100, nullable = true)
     private String nmFantasia;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    @JoinColumn(name = "id_email", referencedColumnName = "id_email", nullable = true)
-    private Email email;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    @JoinColumn(name = "id_telefone", referencedColumnName = "id_telefone", nullable = true)
-    private Telefone telefone;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_pessoa", nullable = true)
-    private Usuario usuario;
 
     public PessoaJuridica() {
     }
@@ -103,5 +88,4 @@ public class PessoaJuridica extends Pessoa implements Serializable {
     public void setNmFantasia(String nmFantasia) {
         this.nmFantasia = nmFantasia;
     }
-
 }

@@ -6,10 +6,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.mail.EmailService;
-import com.gestaosimples.servico.domain.corp.Email;
-import com.gestaosimples.servico.domain.corp.Usuario;
-import com.gestaosimples.servico.repositories.EmailRepository;
-import com.gestaosimples.servico.repositories.UsuarioRepository;
+import com.gestaosimples.corp.domain.Email;
+import com.gestaosimples.corp.domain.Usuario;
+import com.gestaosimples.corp.repositories.EmailRepository;
+import com.gestaosimples.corp.repositories.UsuarioRepository;
 
 @Service
 public class AuthService {
@@ -22,6 +22,7 @@ public class AuthService {
 
     @Autowired
     private EmailService emailService;
+
     @Autowired
     private EmailRepository emailRepository;
 

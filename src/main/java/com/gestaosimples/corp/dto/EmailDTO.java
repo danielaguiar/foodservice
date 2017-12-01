@@ -1,4 +1,4 @@
-package com.gestaosimples.servico.domain.dto;
+package com.gestaosimples.corp.dto;
 
 import java.io.Serializable;
 import org.hibernate.validator.constraints.Email;

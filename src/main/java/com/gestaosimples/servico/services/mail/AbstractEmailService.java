@@ -4,8 +4,8 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import com.gestaosimples.arquitetura.mail.EmailService;
+import com.gestaosimples.corp.domain.Email;
 import com.gestaosimples.servico.domain.Pedido;
-import com.gestaosimples.servico.domain.corp.Email;
 
 public abstract class AbstractEmailService implements EmailService {
 
@@ -20,7 +20,7 @@ public abstract class AbstractEmailService implements EmailService {
 
     protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Pedido pedido) {
         SimpleMailMessage sm = new SimpleMailMessage();
-        sm.setTo(pedido.getCliente().getEmail().getEdEmail());
+        sm.setTo(pedido.getCliente().getUsuario().getEmail().getEdEmail());
         sm.setFrom(sender);
         sm.setSubject("Confirmação de Pedido" + pedido.getId());
         sm.setSentDate(new Date(System.currentTimeMillis()));

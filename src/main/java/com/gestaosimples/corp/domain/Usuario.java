@@ -1,19 +1,21 @@
-package com.gestaosimples.servico.domain.corp;
+package com.gestaosimples.corp.domain;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
@@ -27,6 +29,8 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 6356730187701538408L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_USUARIO", nullable = false)
     private Long id;
 
     @Column(name = "ds_login", length = 60)
@@ -36,13 +40,16 @@ public class Usuario implements Serializable {
     private String senha;
 
     @OneToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_pessoa")
+    private Pessoa pessoa;
+
+    @OneToOne
     @JoinColumn(name = "id_empresa", referencedColumnName = "id_pessoa")
     private Pessoa empresa;
 
-    @MapsId
-    @OneToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_pessoa")
-    private Pessoa pessoa;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoa")
+    @JoinColumn(name = "id_email", referencedColumnName = "id_email", nullable = true)
+    private Email email;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
@@ -52,37 +59,41 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(String login, String senha, Perfil perfil) {
+    public Usuario(String login, String senha, Email email, Perfil perfil) {
         super();
         this.login = login;
         this.senha = senha;
+        this.email = email;
         this.perfis.add(perfil);
     }
 
-    public Usuario(String login, String senha, Perfil[] perfis) {
+    public Usuario(String login, String senha, Email email, Perfil[] perfis) {
         super();
         this.login = login;
         this.senha = senha;
+        this.email = email;
         if (!ObjetoUtil.isVazio(perfis)) {
             this.perfis.addAll(Arrays.asList(perfis));
         }
     }
 
-    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, Perfil perfil) {
+    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, Email email, Perfil perfil) {
         super();
         this.login = login;
         this.senha = senha;
         this.empresa = empresa;
         this.pessoa = pessoa;
+        this.email = email;
         this.perfis.add(perfil);
     }
 
-    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, Perfil[] perfis) {
+    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, Email email, Perfil[] perfis) {
         super();
         this.login = login;
         this.senha = senha;
         this.empresa = empresa;
         this.pessoa = pessoa;
+        this.email = email;
         if (!ObjetoUtil.isVazio(perfis)) {
             this.perfis.addAll(Arrays.asList(perfis));
         }
@@ -159,6 +170,14 @@ public class Usuario implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
     }
 
 }

@@ -1,8 +1,8 @@
-package com.gestaosimples.servico.repositories;
+package com.gestaosimples.corp.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.gestaosimples.servico.domain.corp.PessoaFisica;
+import com.gestaosimples.corp.domain.PessoaFisica;
 
 @Repository
 public interface PessoaFisicaRepository extends JpaRepository<PessoaFisica, Long> {

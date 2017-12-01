@@ -1,23 +1,20 @@
 package com.gestaosimples.servico.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import com.gestaosimples.servico.domain.corp.Email;
-import com.gestaosimples.servico.domain.corp.Endereco;
-import com.gestaosimples.servico.domain.corp.Pessoa;
-import com.gestaosimples.servico.domain.corp.PessoaJuridica;
-import com.gestaosimples.servico.domain.corp.Telefone;
-import com.gestaosimples.servico.domain.corp.Usuario;
+import com.gestaosimples.corp.domain.Endereco;
+import com.gestaosimples.corp.domain.Pessoa;
+import com.gestaosimples.corp.domain.PessoaJuridica;
+import com.gestaosimples.corp.domain.Telefone;
+import com.gestaosimples.corp.domain.Usuario;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
 import com.gestaosimples.servico.domain.enuns.Status;
 
@@ -28,30 +25,29 @@ public class Empresa implements Serializable {
     private static final long serialVersionUID = 6356730187701538408L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(length = 9, name = "id_empresa")
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "id_empresa_juridica", referencedColumnName = "id_pessoa")
+    @JoinColumn(name = "ID_PESSOA", referencedColumnName = "ID_PESSOA")
     private PessoaJuridica empresa;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "cs_cliente", length = 1, nullable = true)
     private Status status;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    @JoinColumn(name = "id_email", referencedColumnName = "id_email", nullable = true)
-    private Email email;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoa")
+    @OneToOne
     @JoinColumn(name = "id_telefone", referencedColumnName = "id_telefone", nullable = true)
     private Telefone telefone;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_pessoa", nullable = true)
+    @OneToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = true)
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    private List<Endereco> enderecos = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
+    private Endereco endereco;
 
     public Empresa() {
     }
@@ -63,6 +59,12 @@ public class Empresa implements Serializable {
     }
 
     public Empresa(EmpresaDTO dto) {
+        this.id = dto.getId();
+        this.empresa = new PessoaJuridica(dto);
+        this.status = Status.A;
+        //this.telefone = new Telefone(dto.getTelefone());
+        //this.endereco = new Endereco(dto.getEndereco());
+        //this.usuario = dto.getUsuario();
     }
 
     public Long getId() {
@@ -89,14 +91,6 @@ public class Empresa implements Serializable {
         this.status = status;
     }
 
-    public Email getEmail() {
-        return email;
-    }
-
-    public void setEmail(Email email) {
-        this.email = email;
-    }
-
     public Telefone getTelefone() {
         return telefone;
     }
@@ -113,12 +107,12 @@ public class Empresa implements Serializable {
         this.usuario = usuario;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
 }

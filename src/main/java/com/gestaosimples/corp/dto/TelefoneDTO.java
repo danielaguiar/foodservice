@@ -1,7 +1,7 @@
-package com.gestaosimples.servico.domain.dto;
+package com.gestaosimples.corp.dto;
 
 import java.io.Serializable;
-import com.gestaosimples.servico.domain.corp.Telefone;
+import com.gestaosimples.corp.domain.Telefone;
 
 public class TelefoneDTO implements Serializable {
 

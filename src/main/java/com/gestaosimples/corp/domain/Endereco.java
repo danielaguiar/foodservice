@@ -1,41 +1,51 @@
-package com.gestaosimples.servico.domain.dto;
+package com.gestaosimples.corp.domain;
 
 import java.io.Serializable;
-import com.gestaosimples.servico.domain.corp.Cidade;
-import com.gestaosimples.servico.domain.corp.Endereco;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import com.gestaosimples.corp.dto.EnderecoDTO;
 
-public class EnderecoDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Entity
+@Table(name = "t_endereco")
+public class Endereco implements Serializable {
 
+    /**  */
+    private static final long serialVersionUID = 6356730187701538408L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(length = 9, name = "id_endereco")
     private Long id;
 
+    @Column(name = "ds_logradouro", length = 50)
     private String logradouro;
 
+    @Column(name = "nr_numero", length = 20)
     private String numero;
 
+    @Column(name = "ds_complemento", length = 80)
     private String complemento;
 
+    @Column(name = "ds_bairro", length = 40)
     private String bairro;
 
+    @Column(name = "nr_cep", length = 10)
     private String cep;
 
+    @ManyToOne
+    @JoinColumn(name = "id_cidade")
     private Cidade cidade;
 
-    public EnderecoDTO() {
+    public Endereco() {
     }
 
-    public EnderecoDTO(Long id, String logradouro, String numero, String complemento, String bairro, String cep, Cidade cidade) {
-        super();
-        this.id = id;
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.complemento = complemento;
-        this.bairro = bairro;
-        this.cep = cep;
-        this.setCidade(cidade);
-    }
-
-    public EnderecoDTO(Endereco endereco) {
+    public Endereco(EnderecoDTO endereco) {
         this.id = endereco.getId();
         this.logradouro = endereco.getLogradouro();
         this.numero = endereco.getNumero();
@@ -43,6 +53,21 @@ public class EnderecoDTO implements Serializable {
         this.bairro = endereco.getBairro();
         this.cep = endereco.getCep();
         this.cidade = endereco.getCidade();
+    }
+
+    public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cep, Cidade cidade) {
+        super();
+        this.id = id;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.cidade = cidade;
+    }
+
+    public Endereco(EnderecoDTO endereco, Pessoa pessoa) {
+        this(endereco);
     }
 
     public Long getId() {
@@ -117,7 +142,7 @@ public class EnderecoDTO implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        EnderecoDTO other = (EnderecoDTO) obj;
+        Endereco other = (Endereco) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
