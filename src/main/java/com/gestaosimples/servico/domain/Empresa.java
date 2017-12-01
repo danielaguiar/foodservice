@@ -14,7 +14,6 @@ import com.gestaosimples.corp.domain.Endereco;
 import com.gestaosimples.corp.domain.Pessoa;
 import com.gestaosimples.corp.domain.PessoaJuridica;
 import com.gestaosimples.corp.domain.Telefone;
-import com.gestaosimples.corp.domain.Usuario;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
 import com.gestaosimples.servico.domain.enuns.Status;
 
@@ -42,14 +41,15 @@ public class Empresa implements Serializable {
     private Telefone telefone;
 
     @OneToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = true)
-    private Usuario usuario;
-
-    @OneToOne
     @JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
     private Endereco endereco;
 
     public Empresa() {
+    }
+
+    public Empresa(Long idEmpresa) {
+        super();
+        this.id = idEmpresa;
     }
 
     public Empresa(Pessoa pessoa, PessoaJuridica empresa) {
@@ -59,12 +59,11 @@ public class Empresa implements Serializable {
     }
 
     public Empresa(EmpresaDTO dto) {
-        this.id = dto.getId();
+        this.id = dto.getIdEmpresa();
         this.empresa = new PessoaJuridica(dto);
         this.status = Status.A;
-        //this.telefone = new Telefone(dto.getTelefone());
-        //this.endereco = new Endereco(dto.getEndereco());
-        //this.usuario = dto.getUsuario();
+        this.telefone = new Telefone(dto.getTelefone());
+        this.endereco = new Endereco(dto.getEndereco());
     }
 
     public Long getId() {
@@ -97,14 +96,6 @@ public class Empresa implements Serializable {
 
     public void setTelefone(Telefone telefone) {
         this.telefone = telefone;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public Endereco getEndereco() {

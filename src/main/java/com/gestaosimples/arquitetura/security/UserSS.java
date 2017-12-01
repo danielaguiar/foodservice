@@ -27,7 +27,7 @@ public class UserSS implements UserDetails {
         this.id = usuario.getId();
         this.login = usuario.getLogin();
         this.senha = usuario.getSenha();
-        this.idEmpresa = usuario.getEmpresa().getIdPessoa();
+        this.idEmpresa = usuario.getEmpresa().getId();
         this.authorities = usuario.getPerfis().stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
     }
 

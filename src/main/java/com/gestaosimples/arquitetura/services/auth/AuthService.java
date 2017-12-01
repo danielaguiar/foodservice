@@ -34,7 +34,7 @@ public class AuthService {
         if (email == null) {
             throw new ObjectNotFoundException("email não localizado!!");
         }
-        Usuario usuario = usuarioRepository.findOne(email.getPessoa().getIdPessoa());
+        Usuario usuario = usuarioRepository.findByEmailId(email.getId());
         if (usuario == null) {
             throw new ObjectNotFoundException("usário não localizado!!");
         }

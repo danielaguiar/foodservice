@@ -19,16 +19,20 @@ public class PessoaJuridica extends Pessoa implements Serializable {
     @Column(name = "NR_CNPJ", length = 14, nullable = false, updatable = false)
     private String nrCnpj;
 
-    @Column(name = "NR_INSCRICAO_ESTADUAL", length = 20, nullable = true, unique = true)
-    private String nrInscricaoEstadual;
-
     @Column(name = "NM_RAZAO_SOCIAL", length = 200, nullable = false)
     private String nmRazaoSocial;
 
     @Column(name = "NM_FANTASIA", length = 100, nullable = true)
     private String nmFantasia;
 
+    @Column(name = "NR_INSCRICAO_ESTADUAL", length = 20, nullable = true, unique = true)
+    private String nrInscricaoEstadual;
+
     public PessoaJuridica() {
+    }
+
+    public PessoaJuridica(Long idPessoaJuridica) {
+        this.idPessoa = idPessoaJuridica;
     }
 
     public PessoaJuridica(Long idPessoa, String nrCnpj, String nmRazaoSocial, Telefone telefone, Endereco endereco) {
@@ -51,7 +55,7 @@ public class PessoaJuridica extends Pessoa implements Serializable {
     }
 
     public PessoaJuridica(EmpresaDTO dto) {
-        this.idPessoa = dto.getId();
+        this.idPessoa = dto.getIdPessoaJuridica();
         this.nrCnpj = dto.getNrCnpj();
         this.nmRazaoSocial = dto.getNmRazaoSocial();
         this.nmFantasia = dto.getNmFantasia();

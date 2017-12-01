@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -19,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
+import com.gestaosimples.servico.domain.Empresa;
 import com.gestaosimples.servico.domain.enuns.Perfil;
 
 @Entity
@@ -44,10 +44,10 @@ public class Usuario implements Serializable {
     private Pessoa pessoa;
 
     @OneToOne
-    @JoinColumn(name = "id_empresa", referencedColumnName = "id_pessoa")
-    private Pessoa empresa;
+    @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa")
+    private Empresa empresa;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoa")
+    @OneToOne
     @JoinColumn(name = "id_email", referencedColumnName = "id_email", nullable = true)
     private Email email;
 
@@ -59,41 +59,23 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(String login, String senha, Email email, Perfil perfil) {
-        super();
-        this.login = login;
-        this.senha = senha;
-        this.email = email;
-        this.perfis.add(perfil);
-    }
-
-    public Usuario(String login, String senha, Email email, Perfil[] perfis) {
-        super();
-        this.login = login;
-        this.senha = senha;
-        this.email = email;
-        if (!ObjetoUtil.isVazio(perfis)) {
-            this.perfis.addAll(Arrays.asList(perfis));
-        }
-    }
-
-    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, Email email, Perfil perfil) {
+    public Usuario(String login, String senha, Empresa empresa, Pessoa pessoa, String edEmail, Perfil perfil) {
         super();
         this.login = login;
         this.senha = senha;
         this.empresa = empresa;
         this.pessoa = pessoa;
-        this.email = email;
+        this.email = new Email(edEmail);
         this.perfis.add(perfil);
     }
 
-    public Usuario(String login, String senha, Pessoa empresa, Pessoa pessoa, Email email, Perfil[] perfis) {
+    public Usuario(String login, String senha, Empresa empresa, Pessoa pessoa, String edEmail, Perfil[] perfis) {
         super();
         this.login = login;
         this.senha = senha;
         this.empresa = empresa;
         this.pessoa = pessoa;
-        this.email = email;
+        this.email = new Email(edEmail);
         if (!ObjetoUtil.isVazio(perfis)) {
             this.perfis.addAll(Arrays.asList(perfis));
         }
@@ -139,11 +121,11 @@ public class Usuario implements Serializable {
         this.perfis = perfis;
     }
 
-    public Pessoa getEmpresa() {
+    public Empresa getEmpresa() {
         return empresa;
     }
 
-    public void setEmpresa(Pessoa empresa) {
+    public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
 

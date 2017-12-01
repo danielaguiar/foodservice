@@ -50,12 +50,12 @@ public class EmpresaResource extends AbstractResource {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> insert(@Valid @RequestBody EmpresaDTO empresa) {
         EmpresaDTO obj = service.insert(service.fromDTO(empresa));
-        return this.createResponse("/{id}", obj.getId());
+        return this.createResponse("/{id}", obj.getIdEmpresa());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody EmpresaDTO empresa) {
-        empresa.setId(id);
+        empresa.setIdEmpresa(id);
         service.update(empresa);
         return this.noContentResponse();
     }

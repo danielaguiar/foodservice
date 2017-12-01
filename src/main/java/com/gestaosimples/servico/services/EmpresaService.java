@@ -15,6 +15,9 @@ import com.gestaosimples.arquitetura.security.UserSS;
 import com.gestaosimples.arquitetura.services.auth.UserService;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.corp.repositories.EnderecoRepository;
+import com.gestaosimples.corp.repositories.PessoaJuridicaRepository;
+import com.gestaosimples.corp.repositories.TelefoneRepository;
+import com.gestaosimples.corp.repositories.UsuarioRepository;
 import com.gestaosimples.servico.domain.Empresa;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
 import com.gestaosimples.servico.repositories.EmpresaRepository;
@@ -26,7 +29,16 @@ public class EmpresaService extends AbstractService {
     private EmpresaRepository repo;
 
     @Autowired
+    private PessoaJuridicaRepository pessoaJuridicaRepository;
+
+    @Autowired
+    private TelefoneRepository telefoneRepository;
+
+    @Autowired
     private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     private Empresa findOne(Long id) {
         Empresa pessoa = repo.findOne(id);
@@ -44,20 +56,24 @@ public class EmpresaService extends AbstractService {
         }
 
         Empresa pessoa = findOne(id);
-        return fromPessoaJuridica(pessoa);
+        return fromEmpresa(pessoa);
     }
 
-    public EmpresaDTO insert(Empresa pessoa) {
-        Empresa pessoaInserida = repo.save(pessoa);
-        return fromPessoaJuridica(pessoaInserida);
+    public EmpresaDTO insert(Empresa empresa) {
+
+        pessoaJuridicaRepository.save(empresa.getEmpresa());
+        enderecoRepository.save(empresa.getEndereco());
+        telefoneRepository.save(empresa.getTelefone());
+        Empresa pessoaInserida = repo.save(empresa);
+        return fromEmpresa(pessoaInserida);
     }
 
     public EmpresaDTO update(EmpresaDTO pessoaDTO) {
-        Empresa empresaBanco = findOne(pessoaDTO.getId());
+        Empresa empresaBanco = findOne(pessoaDTO.getIdEmpresa());
         Empresa pessoa = fromDTO(pessoaDTO);
         updataData(pessoa, empresaBanco);
         repo.save(empresaBanco);
-        return fromPessoaJuridica(empresaBanco);
+        return fromEmpresa(empresaBanco);
     }
 
     private void updataData(Empresa pessoa, Empresa pessoaBanco) {
@@ -85,7 +101,7 @@ public class EmpresaService extends AbstractService {
         return findAll.map(obj -> new EmpresaDTO(obj));
     }
 
-    private EmpresaDTO fromPessoaJuridica(Empresa pessoa) {
+    private EmpresaDTO fromEmpresa(Empresa pessoa) {
         return new EmpresaDTO(pessoa);
     }
 

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import com.gestaosimples.corp.domain.Email;
 import com.gestaosimples.corp.domain.Endereco;
 import com.gestaosimples.corp.domain.Pessoa;
 import com.gestaosimples.corp.domain.Telefone;
@@ -44,6 +45,10 @@ public class Cliente implements Serializable {
     @OneToOne
     @JoinColumn(name = "id_telefone", referencedColumnName = "id_telefone", nullable = true)
     private Telefone telefone;
+
+    @OneToOne
+    @JoinColumn(name = "id_email", referencedColumnName = "id_email", nullable = true)
+    private Email email;
 
     @OneToOne
     @JoinColumn(name = "id_usuario")
@@ -120,6 +125,14 @@ public class Cliente implements Serializable {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
     }
 
 }
