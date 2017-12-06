@@ -4,12 +4,16 @@ import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.gestaosimples.corp.domain.Aplicacao;
+import com.gestaosimples.corp.domain.Atividade;
 import com.gestaosimples.corp.domain.Cidade;
 import com.gestaosimples.corp.domain.Estado;
 import com.gestaosimples.corp.domain.PessoaJuridica;
 import com.gestaosimples.corp.domain.Usuario;
 import com.gestaosimples.corp.dto.EnderecoDTO;
 import com.gestaosimples.corp.dto.TelefoneDTO;
+import com.gestaosimples.corp.repositories.AplicacaoRepository;
+import com.gestaosimples.corp.repositories.AtividadeRepository;
 import com.gestaosimples.corp.repositories.CidadeRepository;
 import com.gestaosimples.corp.repositories.EstadoRepository;
 import com.gestaosimples.corp.services.UsuarioService;
@@ -32,23 +36,34 @@ public class DBService {
     EstadoRepository estadoRepository;
 
     @Autowired
+    AplicacaoRepository aplicacaoRepository;
+
+    @Autowired
+    AtividadeRepository atividadeRepository;
+
+    @Autowired
     UsuarioService usuarioService;
 
     @Autowired
     private BCryptPasswordEncoder pe;
 
     public void instanciateTestDatabase() throws ParseException {
-        incluirCidadeEstado();
+        incluirDadosComuns();
         incluirEmpresas();
         //incluirClientes();
 
     }
 
-    private void incluirCidadeEstado() {
+    private void incluirDadosComuns() {
         Estado go = new Estado(1L, "GO");
         estadoRepository.save(go);
-        Cidade cidade1 = new Cidade(1L, "Cidade Ocidental", go);
-        cidadeRepository.save(cidade1);
+        cidadeRepository.save(new Cidade(1L, "Cidade Ocidental", go));
+
+        aplicacaoRepository.save(new Aplicacao("smartfood"));
+        aplicacaoRepository.save(new Aplicacao("supermarket"));
+
+        atividadeRepository.save(new Atividade("Lanchonete"));
+        atividadeRepository.save(new Atividade("Pizzaria"));
 
     }
 

@@ -1,15 +1,23 @@
 package com.gestaosimples.servico.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import com.gestaosimples.corp.domain.Aplicacao;
+import com.gestaosimples.corp.domain.Atividade;
 import com.gestaosimples.corp.domain.Endereco;
 import com.gestaosimples.corp.domain.Pessoa;
 import com.gestaosimples.corp.domain.PessoaJuridica;
@@ -43,6 +51,16 @@ public class Empresa implements Serializable {
     @OneToOne
     @JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
     private Endereco endereco;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Cascade(value = {CascadeType.REMOVE})
+    @JoinTable(name = "T_EMPRESA_APLICACAO", joinColumns = {@JoinColumn(name = "ID_EMPRESA")}, inverseJoinColumns = {@JoinColumn(name = "ID_APLICACAO")})
+    private Set<Aplicacao> aplicacoes;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Cascade(value = {CascadeType.REMOVE})
+    @JoinTable(name = "T_EMPRESA_ATIVIDADE", joinColumns = {@JoinColumn(name = "ID_EMPRESA")}, inverseJoinColumns = {@JoinColumn(name = "ID_ATIVIDADE")})
+    private Set<Atividade> ramoAtividades;
 
     public Empresa() {
     }
@@ -104,6 +122,22 @@ public class Empresa implements Serializable {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public Set<Aplicacao> getAplicacoes() {
+        return aplicacoes;
+    }
+
+    public void setAplicacoes(Set<Aplicacao> aplicacoes) {
+        this.aplicacoes = aplicacoes;
+    }
+
+    public Set<Atividade> getRamoAtividades() {
+        return ramoAtividades;
+    }
+
+    public void setRamoAtividades(Set<Atividade> ramoAtividades) {
+        this.ramoAtividades = ramoAtividades;
     }
 
 }

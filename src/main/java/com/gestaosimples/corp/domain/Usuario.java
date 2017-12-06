@@ -40,7 +40,7 @@ public class Usuario implements Serializable {
     private String senha;
 
     @OneToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_pessoa")
+    @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
     private Pessoa pessoa;
 
     @OneToOne
