@@ -40,7 +40,7 @@ public class EmpresaResource extends AbstractResource {
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public Page<EmpresaDTO> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page, //
         @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, //
-        @RequestParam(value = "orderby", defaultValue = "nmRazaoSocial") String orderby, //
+        @RequestParam(value = "orderby", defaultValue = "empresa.nmRazaoSocial") String orderby, //
         @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 
         Page<EmpresaDTO> lista = service.findPage(page, linesPerPage, orderby, direction);

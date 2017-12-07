@@ -19,8 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         String[] dados = login.split("#");
         Long idEmpresaUsuarioLogado = Long.parseLong(dados[1]);
-        Usuario usuario = null;
-        usuario = usuarioRepository.findByLoginAndEmpresasId(dados[0], idEmpresaUsuarioLogado);
+        Usuario usuario = usuarioRepository.findByLoginAndEmpresasId(dados[0], idEmpresaUsuarioLogado);
         if (usuario == null) {
             throw new UsernameNotFoundException(login);
         }

@@ -54,6 +54,10 @@ public class JWTUtil {
         Claims claims = getClaims(token);
         if (claims != null && !ObjetoUtil.isVazio(claims.get("idEmpresa"))) {
             Object id = claims.get("idEmpresa");
+            if (id instanceof Integer) {
+                Integer idEmpInteger = (Integer) id;
+                return idEmpInteger.longValue();
+            }
             return (Long) id;
         }
         return null;

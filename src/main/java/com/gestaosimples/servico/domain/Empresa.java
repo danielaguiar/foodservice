@@ -37,7 +37,7 @@ public class Empresa implements Serializable {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "ID_PESSOA", referencedColumnName = "ID_PESSOA")
+    @JoinColumn(name = "ID_PESSOA", referencedColumnName = "ID_PESSOA_JURIDICA")
     private PessoaJuridica empresa;
 
     @Enumerated(EnumType.STRING)

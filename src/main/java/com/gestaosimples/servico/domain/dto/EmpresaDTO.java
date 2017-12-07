@@ -139,10 +139,12 @@ public class EmpresaDTO implements Serializable {
         this.usuario = usuario;
     }
 
+    @JsonIgnore
     public boolean isPessoaFisica() {
         return tipo != null && tipo.equals(TipoPessoa.F);
     }
 
+    @JsonIgnore
     public boolean isPessoaJuridica() {
         return tipo != null && tipo.equals(TipoPessoa.F);
     }
