@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.gestaosimples.arquitetura.security.JWTUtil;
-import com.gestaosimples.arquitetura.security.UserSS;
-import com.gestaosimples.arquitetura.services.auth.AuthService;
-import com.gestaosimples.arquitetura.services.auth.UserService;
+import com.gestaosimples.arquitetura.security.services.AuthService;
+import com.gestaosimples.arquitetura.security.services.UserService;
+import com.gestaosimples.arquitetura.security.util.JWTUtil;
+import com.gestaosimples.arquitetura.security.util.UserSS;
 import com.gestaosimples.corp.dto.EmailDTO;
 
 @RestController

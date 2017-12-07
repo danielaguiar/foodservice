@@ -1,4 +1,4 @@
-package com.gestaosimples.corp.dto;
+package com.gestaosimples.arquitetura.security.dto;
 
 import java.io.Serializable;
 
@@ -9,6 +9,7 @@ public class CredenciaisDTO implements Serializable {
 
     private String login;
     private String senha;
+    private Long idAplicacao;
 
     public CredenciaisDTO() {
     }
@@ -23,6 +24,10 @@ public class CredenciaisDTO implements Serializable {
         return login;
     }
 
+    public String getLoginSistema() {
+        return login + "#" + getIdAplicacao();
+    }
+
     public void setLogin(String login) {
         this.login = login;
     }
@@ -33,6 +38,14 @@ public class CredenciaisDTO implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Long getIdAplicacao() {
+        return idAplicacao;
+    }
+
+    public void setIdAplicacao(Long idAplicacao) {
+        this.idAplicacao = idAplicacao;
     }
 
 }

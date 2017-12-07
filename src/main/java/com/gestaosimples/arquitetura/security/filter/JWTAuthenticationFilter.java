@@ -1,4 +1,4 @@
-package com.gestaosimples.arquitetura.security;
+package com.gestaosimples.arquitetura.security.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gestaosimples.corp.dto.CredenciaisDTO;
+import com.gestaosimples.arquitetura.security.dto.CredenciaisDTO;
+import com.gestaosimples.arquitetura.security.util.JWTUtil;
+import com.gestaosimples.arquitetura.security.util.UserSS;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -30,7 +32,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         try {
             CredenciaisDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredenciaisDTO.class);
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getLogin(), creds.getSenha(), new ArrayList<>());
+            UsernamePasswordAuthenticationToken authToken =
+                new UsernamePasswordAuthenticationToken(creds.getLoginSistema(), creds.getSenha(), new ArrayList<>());
             Authentication auth = authenticationManager.authenticate(authToken);
             return auth;
         } catch (IOException e) {

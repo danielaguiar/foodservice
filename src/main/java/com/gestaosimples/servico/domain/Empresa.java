@@ -18,8 +18,8 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import com.gestaosimples.corp.domain.Aplicacao;
 import com.gestaosimples.corp.domain.Atividade;
+import com.gestaosimples.corp.domain.Email;
 import com.gestaosimples.corp.domain.Endereco;
-import com.gestaosimples.corp.domain.Pessoa;
 import com.gestaosimples.corp.domain.PessoaJuridica;
 import com.gestaosimples.corp.domain.Telefone;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
@@ -43,6 +43,10 @@ public class Empresa implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "cs_cliente", length = 1, nullable = true)
     private Status status;
+
+    @OneToOne
+    @JoinColumn(name = "id_email", referencedColumnName = "id_email", nullable = true)
+    private Email email;
 
     @OneToOne
     @JoinColumn(name = "id_telefone", referencedColumnName = "id_telefone", nullable = true)
@@ -70,18 +74,13 @@ public class Empresa implements Serializable {
         this.id = idEmpresa;
     }
 
-    public Empresa(Pessoa pessoa, PessoaJuridica empresa) {
-        super();
-        this.empresa = empresa;
-        this.status = Status.A;
-    }
-
     public Empresa(EmpresaDTO dto) {
         this.id = dto.getIdEmpresa();
         this.empresa = new PessoaJuridica(dto);
         this.status = Status.A;
         this.telefone = new Telefone(dto.getTelefone());
         this.endereco = new Endereco(dto.getEndereco());
+        this.email = dto.getEmail();
     }
 
     public Long getId() {
@@ -138,6 +137,39 @@ public class Empresa implements Serializable {
 
     public void setRamoAtividades(Set<Atividade> ramoAtividades) {
         this.ramoAtividades = ramoAtividades;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Empresa other = (Empresa) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
     }
 
 }

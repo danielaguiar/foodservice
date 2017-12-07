@@ -1,8 +1,8 @@
-package com.gestaosimples.arquitetura.services.auth;
+package com.gestaosimples.arquitetura.security.services;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import com.gestaosimples.arquitetura.security.UserSS;
+import com.gestaosimples.arquitetura.security.util.UserSS;
 import com.gestaosimples.servico.domain.enuns.Perfil;
 
 @Service

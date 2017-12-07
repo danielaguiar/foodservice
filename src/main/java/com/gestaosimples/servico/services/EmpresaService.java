@@ -11,9 +11,10 @@ import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.exceptions.AuthorizationException;
 import com.gestaosimples.arquitetura.exceptions.DataIntegrityException;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
-import com.gestaosimples.arquitetura.security.UserSS;
-import com.gestaosimples.arquitetura.services.auth.UserService;
+import com.gestaosimples.arquitetura.security.services.UserService;
+import com.gestaosimples.arquitetura.security.util.UserSS;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
+import com.gestaosimples.corp.repositories.EmailRepository;
 import com.gestaosimples.corp.repositories.EnderecoRepository;
 import com.gestaosimples.corp.repositories.PessoaJuridicaRepository;
 import com.gestaosimples.corp.repositories.TelefoneRepository;
@@ -40,6 +41,9 @@ public class EmpresaService extends AbstractService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private EmailRepository emailRepository;
+
     private Empresa findOne(Long id) {
         Empresa pessoa = repo.findOne(id);
         if (pessoa == null) {
@@ -64,6 +68,7 @@ public class EmpresaService extends AbstractService {
         pessoaJuridicaRepository.save(empresa.getEmpresa());
         enderecoRepository.save(empresa.getEndereco());
         telefoneRepository.save(empresa.getTelefone());
+        emailRepository.save(empresa.getEmail());
         Empresa pessoaInserida = repo.save(empresa);
         return fromEmpresa(pessoaInserida);
     }

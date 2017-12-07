@@ -17,9 +17,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import com.gestaosimples.arquitetura.security.JWTAuthenticationFilter;
-import com.gestaosimples.arquitetura.security.JWTAuthorizationFilter;
-import com.gestaosimples.arquitetura.security.JWTUtil;
+import com.gestaosimples.arquitetura.security.filter.JWTAuthenticationFilter;
+import com.gestaosimples.arquitetura.security.filter.JWTAuthorizationFilter;
+import com.gestaosimples.arquitetura.security.util.JWTUtil;
 
 @EnableWebMvc
 @Configuration

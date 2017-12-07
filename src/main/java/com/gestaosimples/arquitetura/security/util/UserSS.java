@@ -1,4 +1,4 @@
-package com.gestaosimples.arquitetura.security;
+package com.gestaosimples.arquitetura.security.util;
 
 import java.util.Collection;
 import java.util.Set;
@@ -22,12 +22,12 @@ public class UserSS implements UserDetails {
     public UserSS() {
     }
 
-    public UserSS(Usuario usuario) {
+    public UserSS(Usuario usuario, Long idEmpresaSelecionada) {
         super();
         this.id = usuario.getId();
         this.login = usuario.getLogin();
         this.senha = usuario.getSenha();
-        this.idEmpresa = usuario.getEmpresa().getId();
+        this.idEmpresa = idEmpresaSelecionada;
         this.authorities = usuario.getPerfis().stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
     }
 
@@ -86,7 +86,31 @@ public class UserSS implements UserDetails {
         return idEmpresa;
     }
 
-    public void setIdEmpresa(Long idEmpresa) {
+    public void setIdEmpresas(Long idEmpresa) {
         this.idEmpresa = idEmpresa;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 }

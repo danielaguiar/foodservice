@@ -48,6 +48,8 @@ public class EmpresaDTO implements Serializable {
             this.nmRazaoSocial = empresa.getEmpresa().getNmRazaoSocial();
             this.nrCnpj = empresa.getEmpresa().getNrCnpj();
             this.tipo = TipoPessoa.J;
+            this.email = empresa.getEmail();
+
         }
         if (empresa.getEndereco() != null) {
             this.endereco = new EnderecoDTO(empresa.getEndereco());
@@ -57,7 +59,8 @@ public class EmpresaDTO implements Serializable {
         }
     }
 
-    public EmpresaDTO(Long id, String nmRazaoSocial, String nmFantasia, String cpfOuCnpj, String tipo, EnderecoDTO endereco, TelefoneDTO telefone) {
+    public EmpresaDTO(Long id, String nmRazaoSocial, String nmFantasia, String cpfOuCnpj, String tipo, String edEmail, EnderecoDTO endereco,
+        TelefoneDTO telefone) {
         this.idEmpresa = id;
         this.nmFantasia = nmFantasia;
         this.nmRazaoSocial = nmRazaoSocial;
@@ -65,6 +68,7 @@ public class EmpresaDTO implements Serializable {
         this.tipo = tipo != null ? null : TipoPessoa.toEnum(tipo);
         this.endereco = endereco;
         this.telefone = telefone;
+        this.email = new Email(edEmail);
     }
 
     public String getNmRazaoSocial() {

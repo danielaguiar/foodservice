@@ -1,5 +1,8 @@
-package com.gestaosimples.arquitetura.security;
+package com.gestaosimples.arquitetura.security.util;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,9 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JWTUtil {
@@ -26,8 +26,6 @@ public class JWTUtil {
             .setExpiration(new Date(System.currentTimeMillis() + expiration)) //
             .signWith(SignatureAlgorithm.HS256, secret.getBytes()) //
             .claim("idEmpresa", user.getIdEmpresa()) //
-            //.claim("idUsuario", user.getId()) //
-            //.claim("roles", user.getAuthorities().toString()) //
             .compact();
     }
 

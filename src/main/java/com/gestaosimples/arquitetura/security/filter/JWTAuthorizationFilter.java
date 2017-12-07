@@ -1,4 +1,4 @@
-package com.gestaosimples.arquitetura.security;
+package com.gestaosimples.arquitetura.security.filter;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import com.gestaosimples.arquitetura.security.util.JWTUtil;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 

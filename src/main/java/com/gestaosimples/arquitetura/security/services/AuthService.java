@@ -1,4 +1,4 @@
-package com.gestaosimples.arquitetura.services.auth;
+package com.gestaosimples.arquitetura.security.services;
 
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
