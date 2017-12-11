@@ -9,7 +9,7 @@ public class CredenciaisDTO implements Serializable {
 
     private String login;
     private String senha;
-    private Long idAplicacao;
+    private Long idEmpresa;
 
     public CredenciaisDTO() {
     }
@@ -25,7 +25,7 @@ public class CredenciaisDTO implements Serializable {
     }
 
     public String getLoginSistema() {
-        return login + "#" + getIdAplicacao();
+        return login + "#" + getIdEmpresa();
     }
 
     public void setLogin(String login) {
@@ -40,12 +40,12 @@ public class CredenciaisDTO implements Serializable {
         this.senha = senha;
     }
 
-    public Long getIdAplicacao() {
-        return idAplicacao;
+    public Long getIdEmpresa() {
+        return idEmpresa;
     }
 
-    public void setIdAplicacao(Long idAplicacao) {
-        this.idAplicacao = idAplicacao;
+    public void setIdEmpresa(Long idEmpresa) {
+        this.idEmpresa = idEmpresa;
     }
 
 }

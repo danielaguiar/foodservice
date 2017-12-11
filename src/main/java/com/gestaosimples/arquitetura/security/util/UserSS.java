@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.corp.domain.Usuario;
 import com.gestaosimples.servico.domain.enuns.Perfil;
 
@@ -27,7 +28,24 @@ public class UserSS implements UserDetails {
         this.login = usuario.getLogin();
         this.senha = usuario.getSenha();
         this.idEmpresa = idEmpresaSelecionada;
-        this.authorities = usuario.getPerfis().stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
+
+        //        if (!ObjetoUtil.isVazio(usuario.getPerfis())) {
+        //            List<SimpleGrantedAuthority> perfisUsuario = new ArrayList<SimpleGrantedAuthority>();
+        //            for (UsuarioEmpresaPerfil p : usuario.getPerfis()) {
+        //                if (p.getId().getIdEmpresa().equals(idEmpresaSelecionada)) {
+        //                    SimpleGrantedAuthority s = new SimpleGrantedAuthority(p.getId().getPerfil().getDescricao());
+        //                    perfisUsuario.add(s);
+        //                }
+        //            }
+        //            authorities = perfisUsuario;
+        //        }
+
+        if (!ObjetoUtil.isVazio(usuario.getPerfis())) {
+            this.authorities =
+                usuario.getPerfis().stream().filter(p -> p.getId().getIdEmpresa().equals(idEmpresa))
+                    .map(x -> new SimpleGrantedAuthority(x.getId().getPerfil().getDescricao())).collect(Collectors.toList());
+
+        }
     }
 
     public Long getId() {

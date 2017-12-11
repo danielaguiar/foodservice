@@ -1,14 +1,10 @@
 package com.gestaosimples.corp.domain;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
@@ -25,6 +22,10 @@ import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.servico.domain.Empresa;
 import com.gestaosimples.servico.domain.enuns.Perfil;
 
+/**
+ * DOCUMENT ME!
+ *
+ */
 @Entity
 @Table(name = "t_usuario")
 public class Usuario implements Serializable {
@@ -58,11 +59,10 @@ public class Usuario implements Serializable {
     @JoinTable(name = "T_USUARIO_EMPRESA", joinColumns = {@JoinColumn(name = "ID_EMPRESA")}, inverseJoinColumns = {@JoinColumn(name = "ID_USUARIO")})
     private Set<Empresa> empresas = new HashSet<Empresa>();
 
-    @JsonIgnore
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name = "t_usuario_perfil", joinColumns = @JoinColumn(name = "id_usuario_perfil"))
-    private Set<Perfil> perfis = new HashSet<Perfil>();
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade(value = {CascadeType.ALL})
+    @JoinTable(name = "id_usuario")
+    private Set<UsuarioEmpresaPerfil> perfis = new HashSet<UsuarioEmpresaPerfil>();
 
     public Usuario() {
     }
@@ -74,7 +74,7 @@ public class Usuario implements Serializable {
         this.empresas.add(empresa);
         this.pessoa = pessoa;
         this.email = new Email(edEmail);
-        this.perfis.add(perfil);
+        this.perfis.add(new UsuarioEmpresaPerfil(empresa, perfil));
     }
 
     public Usuario(String login, String senha, Empresa empresa, Pessoa pessoa, String edEmail, Perfil[] perfis) {
@@ -85,7 +85,9 @@ public class Usuario implements Serializable {
         this.pessoa = pessoa;
         this.email = new Email(edEmail);
         if (!ObjetoUtil.isVazio(perfis)) {
-            this.perfis.addAll(Arrays.asList(perfis));
+            for (Perfil perfil : perfis) {
+                this.perfis.add(new UsuarioEmpresaPerfil(empresa, perfil));
+            }
         }
     }
 
@@ -121,20 +123,20 @@ public class Usuario implements Serializable {
         this.pessoa = pessoa;
     }
 
-    public Set<Perfil> getPerfis() {
-        return perfis;
-    }
-
-    public void setPerfis(Set<Perfil> perfis) {
-        this.perfis = perfis;
-    }
-
     public Email getEmail() {
         return email;
     }
 
     public void setEmail(Email email) {
         this.email = email;
+    }
+
+    public Set<UsuarioEmpresaPerfil> getPerfis() {
+        return perfis;
+    }
+
+    public void setPerfis(Set<UsuarioEmpresaPerfil> perfis) {
+        this.perfis = perfis;
     }
 
     @Override
