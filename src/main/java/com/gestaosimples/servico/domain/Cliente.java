@@ -15,7 +15,6 @@ import com.gestaosimples.corp.domain.Email;
 import com.gestaosimples.corp.domain.Endereco;
 import com.gestaosimples.corp.domain.Pessoa;
 import com.gestaosimples.corp.domain.Telefone;
-import com.gestaosimples.corp.domain.Usuario;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
 import com.gestaosimples.servico.domain.enuns.Status;
 
@@ -35,7 +34,7 @@ public class Cliente implements Serializable {
     private Pessoa pessoa;
 
     @ManyToOne
-    @JoinColumn(name = "id_empresa_juridica", referencedColumnName = "id_pessoa")
+    @JoinColumn(name = "id_empresa", referencedColumnName = "id_pessoa")
     private Empresa empresa;
 
     @Enumerated(EnumType.STRING)
@@ -49,10 +48,6 @@ public class Cliente implements Serializable {
     @OneToOne
     @JoinColumn(name = "id_email", referencedColumnName = "id_email", nullable = true)
     private Email email;
-
-    @OneToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
 
     @OneToOne
     @JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
@@ -69,6 +64,12 @@ public class Cliente implements Serializable {
     }
 
     public Cliente(ClienteDTO dto) {
+        this.id = dto.getIdCliente();
+        this.empresa = new Empresa(dto.getIdEmpresa());
+        this.status = Status.A;
+        this.telefone = new Telefone(dto.getTelefone());
+        this.endereco = new Endereco(dto.getEndereco());
+        this.email = dto.getEmail();
     }
 
     public Long getId() {
@@ -101,14 +102,6 @@ public class Cliente implements Serializable {
 
     public void setTelefone(Telefone telefone) {
         this.telefone = telefone;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public Empresa getEmpresa() {

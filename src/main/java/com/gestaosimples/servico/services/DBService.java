@@ -12,11 +12,7 @@ import com.gestaosimples.corp.domain.PessoaJuridica;
 import com.gestaosimples.corp.domain.Usuario;
 import com.gestaosimples.corp.dto.EnderecoDTO;
 import com.gestaosimples.corp.dto.TelefoneDTO;
-import com.gestaosimples.corp.repositories.AplicacaoRepository;
-import com.gestaosimples.corp.repositories.AtividadeRepository;
-import com.gestaosimples.corp.repositories.CidadeRepository;
-import com.gestaosimples.corp.repositories.EstadoRepository;
-import com.gestaosimples.corp.services.UsuarioService;
+import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.Empresa;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
@@ -24,25 +20,7 @@ import com.gestaosimples.servico.domain.enuns.Perfil;
 import com.gestaosimples.servico.domain.enuns.TipoPessoa;
 
 @Service
-public class DBService {
-
-    @Autowired
-    EmpresaService empresaService;
-
-    @Autowired
-    CidadeRepository cidadeRepository;
-
-    @Autowired
-    EstadoRepository estadoRepository;
-
-    @Autowired
-    AplicacaoRepository aplicacaoRepository;
-
-    @Autowired
-    AtividadeRepository atividadeRepository;
-
-    @Autowired
-    UsuarioService usuarioService;
+public class DBService extends AbstractRepository {
 
     @Autowired
     private BCryptPasswordEncoder pe;
@@ -50,7 +28,7 @@ public class DBService {
     public void instanciateTestDatabase() throws ParseException {
         incluirDadosComuns();
         incluirEmpresas();
-        //incluirClientes();
+        incluirClientes();
 
     }
 
@@ -97,10 +75,12 @@ public class DBService {
         TelefoneDTO telefone1 = new TelefoneDTO(null, "6136051086", "61996863636", "61996863636");
         EnderecoDTO endereco1 = new EnderecoDTO(null, "sq 15 quadra 12 casa", "92", "", "centro", "72880576", new Cidade(1l));
 
-        ClienteDTO cli1 = new ClienteDTO(null, "daniel rodrigues aguiar", "65857680100", TipoPessoa.F, endereco1, telefone1);
-        ClienteDTO cli2 = new ClienteDTO(null, "daniel rodrigues aguiar", "65857680100", TipoPessoa.F, endereco1, telefone1);
+        ClienteDTO cli1 =
+            new ClienteDTO(null, new Empresa(1L), "daniel rodrigues aguiar", "65857680100", TipoPessoa.F, endereco1, telefone1, "contato1@gestaosimples.com");
+        ClienteDTO cli2 =
+            new ClienteDTO(null, new Empresa(1L), "daniel rodrigues aguiar", "65857680100", TipoPessoa.F, endereco1, telefone1, "contato1@gestaosimples.com");
 
-        //clienteService.insert(new PessoaFisica(cli1));
-        //clienteService.insert(new PessoaFisica(cli2));
+        clienteService.insert(new Cliente(cli1));
+        clienteService.insert(new Cliente(cli2));
     }
 }

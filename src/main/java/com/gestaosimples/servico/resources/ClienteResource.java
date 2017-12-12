@@ -51,7 +51,7 @@ public class ClienteResource extends AbstractResource {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO cliente) {
         ClienteDTO obj = service.insert(service.fromDTO(cliente));
-        return this.createResponse("/{id}", obj.getId());
+        return this.createResponse("/{id}", obj.getIdCliente());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

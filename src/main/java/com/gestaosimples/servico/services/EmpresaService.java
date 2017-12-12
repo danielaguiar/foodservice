@@ -2,7 +2,6 @@ package com.gestaosimples.servico.services;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,38 +13,14 @@ import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.security.services.UserService;
 import com.gestaosimples.arquitetura.security.util.UserSS;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
-import com.gestaosimples.corp.repositories.EmailRepository;
-import com.gestaosimples.corp.repositories.EnderecoRepository;
-import com.gestaosimples.corp.repositories.PessoaJuridicaRepository;
-import com.gestaosimples.corp.repositories.TelefoneRepository;
-import com.gestaosimples.corp.repositories.UsuarioRepository;
 import com.gestaosimples.servico.domain.Empresa;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
-import com.gestaosimples.servico.repositories.EmpresaRepository;
 
 @Service
-public class EmpresaService extends AbstractService {
-
-    @Autowired
-    private EmpresaRepository repo;
-
-    @Autowired
-    private PessoaJuridicaRepository pessoaJuridicaRepository;
-
-    @Autowired
-    private TelefoneRepository telefoneRepository;
-
-    @Autowired
-    private EnderecoRepository enderecoRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
-    private EmailRepository emailRepository;
+public class EmpresaService extends AbstractRepository {
 
     private Empresa findOne(Long id) {
-        Empresa pessoa = repo.findOne(id);
+        Empresa pessoa = empresaRepository.findOne(id);
         if (pessoa == null) {
             throw new ObjectNotFoundException("Objeto não econtrado! id: " + id + ", " + Empresa.class.getName());
         }
@@ -69,7 +44,7 @@ public class EmpresaService extends AbstractService {
         enderecoRepository.save(empresa.getEndereco());
         telefoneRepository.save(empresa.getTelefone());
         emailRepository.save(empresa.getEmail());
-        Empresa pessoaInserida = repo.save(empresa);
+        Empresa pessoaInserida = empresaRepository.save(empresa);
         return fromEmpresa(pessoaInserida);
     }
 
@@ -77,7 +52,7 @@ public class EmpresaService extends AbstractService {
         Empresa empresaBanco = findOne(pessoaDTO.getIdEmpresa());
         Empresa pessoa = fromDTO(pessoaDTO);
         updataData(pessoa, empresaBanco);
-        repo.save(empresaBanco);
+        empresaRepository.save(empresaBanco);
         return fromEmpresa(empresaBanco);
     }
 
@@ -88,21 +63,21 @@ public class EmpresaService extends AbstractService {
     public void delete(Long id) {
         find(id);
         try {
-            repo.delete(id);
+            empresaRepository.delete(id);
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possível excluir uma cliente que tem pedidos");
         }
     }
 
     public List<EmpresaDTO> findAll() {
-        List<Empresa> findAll = repo.findAll();
+        List<Empresa> findAll = empresaRepository.findAll();
         List<EmpresaDTO> empresas = findAll.stream().map(x -> new EmpresaDTO(x)).collect(Collectors.toList());
         return empresas;
     }
 
     public Page<EmpresaDTO> findPage(Integer page, Integer linesPerPage, String orderby, String direction) {
         PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderby);
-        Page<Empresa> findAll = repo.findAll(pageRequest);
+        Page<Empresa> findAll = empresaRepository.findAll(pageRequest);
         return findAll.map(obj -> new EmpresaDTO(obj));
     }
 
@@ -115,12 +90,12 @@ public class EmpresaService extends AbstractService {
     }
 
     public boolean isCNPJUtilizado(String nrCnpj) {
-        Empresa empresa = repo.findByEmpresaNrCnpj(nrCnpj);
+        Empresa empresa = empresaRepository.findByEmpresaNrCnpj(nrCnpj);
         return !ObjetoUtil.isVazio(empresa);
     }
 
     public boolean isEmailUtilizado(String email) {
-        Empresa pessoa = repo.findByEmailEdEmail(email);
+        Empresa pessoa = empresaRepository.findByEmailEdEmail(email);
         return !ObjetoUtil.isVazio(pessoa);
     }
 }

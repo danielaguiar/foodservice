@@ -1,6 +1,7 @@
 package com.gestaosimples.servico.domain.dto;
 
 import java.io.Serializable;
+import com.gestaosimples.corp.domain.Email;
 import com.gestaosimples.corp.dto.EnderecoDTO;
 import com.gestaosimples.corp.dto.TelefoneDTO;
 import com.gestaosimples.servico.domain.Cliente;
@@ -18,11 +19,11 @@ public class ClienteDTO implements Serializable {
     /**  */
     private static final long serialVersionUID = 1523923062214069859L;
 
-    private Long id;
+    private Long idCliente;
+
+    private Long idEmpresa;
 
     private String nmPessoaFisica;
-
-    private String nmPessoaJuridica;
 
     private String nrCpfOuCnpj;
 
@@ -32,7 +33,22 @@ public class ClienteDTO implements Serializable {
 
     private TelefoneDTO telefone;
 
+    private Email email;
+
     public ClienteDTO() {
+    }
+
+    public ClienteDTO(Long idCliente, Empresa empresa, String nmPessoaFisica, String nrCpfOuCnpj, TipoPessoa tipo, EnderecoDTO endereco, TelefoneDTO telefone,
+        String edEmail) {
+        super();
+        this.idCliente = idCliente;
+        this.idEmpresa = empresa.getId();
+        this.nmPessoaFisica = nmPessoaFisica;
+        this.nrCpfOuCnpj = nrCpfOuCnpj;
+        this.tipo = tipo;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.email = new Email(edEmail);
     }
 
     public ClienteDTO(Cliente cliente) {
@@ -43,16 +59,12 @@ public class ClienteDTO implements Serializable {
 
     }
 
-    public ClienteDTO(Long id, String nmPessoaFisica, String nrCpf, TipoPessoa tipo, EnderecoDTO endereco, TelefoneDTO telefone) {
-        super();
+    public Long getIdCliente() {
+        return idCliente;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getNmPessoaFisica() {
@@ -61,14 +73,6 @@ public class ClienteDTO implements Serializable {
 
     public void setNmPessoaFisica(String nmPessoaFisica) {
         this.nmPessoaFisica = nmPessoaFisica;
-    }
-
-    public String getNmPessoaJuridica() {
-        return nmPessoaJuridica;
-    }
-
-    public void setNmPessoaJuridica(String nmPessoaJuridica) {
-        this.nmPessoaJuridica = nmPessoaJuridica;
     }
 
     public String getNrCpfOuCnpj() {
@@ -101,6 +105,22 @@ public class ClienteDTO implements Serializable {
 
     public void setTelefone(TelefoneDTO telefone) {
         this.telefone = telefone;
+    }
+
+    public Long getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Long idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
     }
 
 }
