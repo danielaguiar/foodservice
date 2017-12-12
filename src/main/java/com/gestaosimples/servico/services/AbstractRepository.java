@@ -8,6 +8,7 @@ import com.gestaosimples.corp.repositories.ClienteRepository;
 import com.gestaosimples.corp.repositories.EmailRepository;
 import com.gestaosimples.corp.repositories.EnderecoRepository;
 import com.gestaosimples.corp.repositories.EstadoRepository;
+import com.gestaosimples.corp.repositories.PessoaFisicaRepository;
 import com.gestaosimples.corp.repositories.PessoaJuridicaRepository;
 import com.gestaosimples.corp.repositories.TelefoneRepository;
 import com.gestaosimples.corp.repositories.UsuarioRepository;
@@ -27,6 +28,9 @@ public abstract class AbstractRepository extends AbstractService {
 
     @Autowired
     protected PessoaJuridicaRepository pessoaJuridicaRepository;
+
+    @Autowired
+    protected PessoaFisicaRepository pessoaFisicaRepository;
 
     @Autowired
     protected TelefoneRepository telefoneRepository;

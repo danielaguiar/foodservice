@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import com.gestaosimples.corp.domain.Email;
 import com.gestaosimples.corp.domain.Endereco;
-import com.gestaosimples.corp.domain.Pessoa;
+import com.gestaosimples.corp.domain.PessoaFisica;
 import com.gestaosimples.corp.domain.Telefone;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
 import com.gestaosimples.servico.domain.enuns.Status;
@@ -31,10 +31,10 @@ public class Cliente implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "id_pessoa_cliente", referencedColumnName = "id_pessoa")
-    private Pessoa pessoa;
+    private PessoaFisica pessoa;
 
     @ManyToOne
-    @JoinColumn(name = "id_empresa", referencedColumnName = "id_pessoa")
+    @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa")
     private Empresa empresa;
 
     @Enumerated(EnumType.STRING)
@@ -56,7 +56,7 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(Pessoa pessoa, Empresa empresa) {
+    public Cliente(PessoaFisica pessoa, Empresa empresa) {
         super();
         this.pessoa = pessoa;
         this.empresa = empresa;
@@ -66,7 +66,9 @@ public class Cliente implements Serializable {
     public Cliente(ClienteDTO dto) {
         this.id = dto.getIdCliente();
         this.empresa = new Empresa(dto.getIdEmpresa());
+        this.pessoa = new PessoaFisica(null, dto.getNmPessoaFisica(), dto.getNrCpfOuCnpj());
         this.status = Status.A;
+        this.empresa = new Empresa(dto.getIdEmpresa());
         this.telefone = new Telefone(dto.getTelefone());
         this.endereco = new Endereco(dto.getEndereco());
         this.email = dto.getEmail();
@@ -80,11 +82,11 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    public Pessoa getPessoa() {
+    public PessoaFisica getPessoa() {
         return pessoa;
     }
 
-    public void setPessoa(Pessoa pessoa) {
+    public void setPessoa(PessoaFisica pessoa) {
         this.pessoa = pessoa;
     }
 

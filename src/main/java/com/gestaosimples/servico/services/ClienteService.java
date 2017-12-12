@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.gestaosimples.arquitetura.exceptions.DataIntegrityException;
 import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
+import com.gestaosimples.corp.domain.PessoaFisica;
 import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
 
@@ -31,6 +32,9 @@ public class ClienteService extends AbstractRepository {
 
     public ClienteDTO insert(Cliente cliente) {
         validarPerfilUsuario();
+        PessoaFisica pessoa = cliente.getPessoa();
+        pessoaFisicaRepository.save(pessoa);
+        enderecoRepository.save(cliente.getEndereco());
         enderecoRepository.save(cliente.getEndereco());
         telefoneRepository.save(cliente.getTelefone());
         emailRepository.save(cliente.getEmail());
@@ -47,9 +51,9 @@ public class ClienteService extends AbstractRepository {
         return fromPessoaFisica(clienteBanco);
     }
 
-    private void updataData(Cliente pessoa, Cliente pessoaBanco) {
-        //pessoaBanco.setNome(pessoaAtual.getNome());
-        //pessoaBanco.setEmail(pessoaAtual.getEmail());
+    private void updataData(Cliente cliente, Cliente clienteBanco) {
+        //pessoaBanco.setNome(pessoa.get);
+        //pessoaBanco.setEmail(pessoa.getEmail());
     }
 
     public void delete(Long id) {

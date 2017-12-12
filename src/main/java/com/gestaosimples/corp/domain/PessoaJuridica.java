@@ -41,7 +41,7 @@ public class PessoaJuridica extends Pessoa implements Serializable {
         this.nmRazaoSocial = nmRazaoSocial;
     }
 
-    public PessoaJuridica(Long idPessoa, String nrCnpj, String nmRazaoSocial) {
+    public PessoaJuridica(Long idPessoa, String nmRazaoSocial, String nrCnpj) {
         super(idPessoa);
         this.nrCnpj = nrCnpj;
         this.nmRazaoSocial = nmRazaoSocial;

@@ -8,6 +8,7 @@ import com.gestaosimples.corp.domain.Aplicacao;
 import com.gestaosimples.corp.domain.Atividade;
 import com.gestaosimples.corp.domain.Cidade;
 import com.gestaosimples.corp.domain.Estado;
+import com.gestaosimples.corp.domain.PessoaFisica;
 import com.gestaosimples.corp.domain.PessoaJuridica;
 import com.gestaosimples.corp.domain.Usuario;
 import com.gestaosimples.corp.dto.EnderecoDTO;
@@ -77,10 +78,17 @@ public class DBService extends AbstractRepository {
 
         ClienteDTO cli1 =
             new ClienteDTO(null, new Empresa(1L), "daniel rodrigues aguiar", "65857680100", TipoPessoa.F, endereco1, telefone1, "contato1@gestaosimples.com");
+        cli1 = clienteService.insert(new Cliente(cli1));
+        Usuario usuario3 =
+            new Usuario("gestaosimples3", pe.encode("123"), new Empresa(1L), new PessoaFisica(cli1.getIdPessoaFisica()), "admin1@gestaosimples.com", Perfil.C);
+        usuarioService.insert(usuario3);
+
         ClienteDTO cli2 =
             new ClienteDTO(null, new Empresa(1L), "daniel rodrigues aguiar", "65857680100", TipoPessoa.F, endereco1, telefone1, "contato1@gestaosimples.com");
+        cli2 = clienteService.insert(new Cliente(cli2));
+        Usuario usuario4 =
+            new Usuario("gestaosimples3", pe.encode("123"), new Empresa(1L), new PessoaFisica(cli1.getIdPessoaFisica()), "admin1@gestaosimples.com", Perfil.C);
+        usuarioService.insert(usuario4);
 
-        clienteService.insert(new Cliente(cli1));
-        clienteService.insert(new Cliente(cli2));
     }
 }
