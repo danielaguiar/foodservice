@@ -115,12 +115,12 @@ public class EmpresaService extends AbstractService {
     }
 
     public boolean isCNPJUtilizado(String nrCnpj) {
-        Empresa pessoa = null;//repo.findByNrCnpj(nrCnpj);
-        return !ObjetoUtil.isVazio(pessoa);
+        Empresa empresa = repo.findByEmpresaNrCnpj(nrCnpj);
+        return !ObjetoUtil.isVazio(empresa);
     }
 
     public boolean isEmailUtilizado(String email) {
-        Empresa pessoa = null;//repo.findByEmailEdEmail(email);
+        Empresa pessoa = repo.findByEmailEdEmail(email);
         return !ObjetoUtil.isVazio(pessoa);
     }
 }

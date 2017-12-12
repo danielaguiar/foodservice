@@ -13,7 +13,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Usuario findByLogin(String email);
 
     //@Query(value = "")
-    Usuario findByLoginAndEmpresasId(@Param("nome") String login, @Param("id") Long id);
+    Usuario findByLoginAndEmpresaId(@Param("nome") String login, @Param("id") Long id);
 
     @Transactional(readOnly = true)
     Usuario findByEmailId(Long id);

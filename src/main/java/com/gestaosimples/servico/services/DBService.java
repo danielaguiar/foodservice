@@ -85,9 +85,11 @@ public class DBService {
         EnderecoDTO endereco2 = new EnderecoDTO(null, "sq 13 quadra 09 lota", "01 C", "", "centro", "72880576", new Cidade(1l));
         EmpresaDTO emp2 =
             new EmpresaDTO(null, "gestao simples", "network", "01508063000163", TipoPessoa.J.getCodigo(), "contato@gestaosimples.com", endereco2, telefone2);
-        //emp2 = empresaService.insert(new Empresa(emp2));
-        //Usuario usuario2 = new Usuario("gestaosimples2", pe.encode("123"), "admin1@gestaosimples.com", Perfil.M);
-        //usuarioRepository.save(usuario1);
+        emp2 = empresaService.insert(new Empresa(emp2));
+        Usuario usuario2 =
+            new Usuario("gestaosimples2", pe.encode("123"), new Empresa(emp2.getIdEmpresa()), new PessoaJuridica(emp2.getIdPessoaJuridica()),
+                "admin1@gestaosimples.com", Perfil.M);
+        usuarioService.insert(usuario2);
 
     }
 

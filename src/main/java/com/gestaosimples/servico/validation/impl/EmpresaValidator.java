@@ -72,7 +72,7 @@ public class EmpresaValidator implements ConstraintValidator<EmpresaValidation, 
             } else if (!CPFCNPJUtil.isCnpj(dto.getNrCnpj())) {
                 list.add(new FieldMessage("nmRazaoSocial", "O CNPJ está inválido"));
             } else if (empresaService.isCNPJUtilizado(dto.getNrCnpj())) {
-                list.add(new FieldMessage("nmRazaoSocial", "O CNPJ " + dto.getNrCnpj() + " já está sendo utilizado"));
+                list.add(new FieldMessage("nrCnpj", "O CNPJ " + dto.getNrCnpj() + " já está sendo utilizado"));
             }
             if (ObjetoUtil.isVazio(dto.getEmail())) {
                 list.add(new FieldMessage("email", "O campo email é obrigatório"));
