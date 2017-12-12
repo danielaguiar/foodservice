@@ -24,17 +24,13 @@ public class ClienteService extends AbstractRepository {
     }
 
     public ClienteDTO find(Long id) {
-
-        //UserSS user = UserService.getUsuarioLogado();
-        //if (UserService.isUsuarioLogadoAdmin() && !user.getId().equals(id)) {
-        //    throw new AuthorizationException("operação no permitida");
-        //}
-
+        validarOperacao(id);
         Cliente pessoa = findOne(id);
         return fromPessoaFisica(pessoa);
     }
 
     public ClienteDTO insert(Cliente cliente) {
+        validarPerfilUsuario();
         enderecoRepository.save(cliente.getEndereco());
         telefoneRepository.save(cliente.getTelefone());
         emailRepository.save(cliente.getEmail());

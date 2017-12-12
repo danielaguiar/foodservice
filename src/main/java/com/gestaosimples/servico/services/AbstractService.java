@@ -3,7 +3,7 @@ package com.gestaosimples.servico.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.gestaosimples.corp.services.UsuarioService;
 
-public abstract class AbstractService {
+public abstract class AbstractService extends AbstractSmartFood {
 
     // services
     @Autowired
