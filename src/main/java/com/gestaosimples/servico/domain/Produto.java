@@ -14,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import com.gestaosimples.corp.domain.UnidadeMedida;
+import com.gestaosimples.servico.domain.dto.ProdutoDTO;
 import com.gestaosimples.servico.domain.enuns.SimNao;
 import com.gestaosimples.servico.domain.enuns.Status;
 
@@ -31,12 +34,17 @@ public class Produto implements Serializable {
     @Column(name = "nm_produto", length = 100)
     private String nmProduto;
 
-    @Column(name = "vl_preco", length = 10)
-    private Double preço;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "st_possui_itens", length = 1)
+    private SimNao possuiItens;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "st_possuiItens", length = 1)
-    private SimNao possuiItens;
+    @Column(name = "st_produto_composto", length = 1)
+    private SimNao produtoComposto;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "st_uso_interno", length = 1)
+    private SimNao usoInterno;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "st_produto", length = 1)
@@ -50,7 +58,23 @@ public class Produto implements Serializable {
     @JoinTable(name = "t_produto_categoria", joinColumns = @JoinColumn(name = "id_produto"), inverseJoinColumns = @JoinColumn(name = "id_categoria"))
     private List<Categoria> categorias = new ArrayList<Categoria>();
 
-    public Produto() {
+    @ManyToMany
+    @JoinTable(name = "t_produto_unidade_medida", joinColumns = @JoinColumn(name = "id_produto"), inverseJoinColumns = @JoinColumn(name = "id_unidade_medida", referencedColumnName = "id_unidade_medida"))
+    private List<UnidadeMedida> unidades = new ArrayList<UnidadeMedida>();
+
+    @Column(name = "vl_preco", length = 10)
+    private Double preço;
+
+    @Column(name = "qtd_estoque", length = 10)
+    private Integer qtdMinima;
+
+    @Column(name = "qtd_minima_estoque", length = 10)
+    private Integer qtdMinimaEstoque;
+
+    @OneToMany(mappedBy = "produto")
+    private List<ProdutoComposicao> composicoes;
+
+    public Produto(ProdutoDTO dto) {
     }
 
     public Produto(Long id) {
@@ -123,8 +147,56 @@ public class Produto implements Serializable {
         return empresa;
     }
 
+    public SimNao getProdutoComposto() {
+        return produtoComposto;
+    }
+
+    public void setProdutoComposto(SimNao produtoComposto) {
+        this.produtoComposto = produtoComposto;
+    }
+
+    public SimNao getUsoInterno() {
+        return usoInterno;
+    }
+
+    public void setUsoInterno(SimNao usoInterno) {
+        this.usoInterno = usoInterno;
+    }
+
+    public Integer getQtdMinima() {
+        return qtdMinima;
+    }
+
+    public void setQtdMinima(Integer qtdMinima) {
+        this.qtdMinima = qtdMinima;
+    }
+
+    public Integer getQtdMinimaEstoque() {
+        return qtdMinimaEstoque;
+    }
+
+    public void setQtdMinimaEstoque(Integer qtdMinimaEstoque) {
+        this.qtdMinimaEstoque = qtdMinimaEstoque;
+    }
+
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
+    }
+
+    public List<ProdutoComposicao> getComposicoes() {
+        return composicoes;
+    }
+
+    public void setComposicoes(List<ProdutoComposicao> composicoes) {
+        this.composicoes = composicoes;
+    }
+
+    public List<UnidadeMedida> getUnidades() {
+        return unidades;
+    }
+
+    public void setUnidades(List<UnidadeMedida> unidades) {
+        this.unidades = unidades;
     }
 
 }

@@ -10,6 +10,7 @@ import com.gestaosimples.corp.domain.Cidade;
 import com.gestaosimples.corp.domain.Estado;
 import com.gestaosimples.corp.domain.PessoaFisica;
 import com.gestaosimples.corp.domain.PessoaJuridica;
+import com.gestaosimples.corp.domain.UnidadeMedida;
 import com.gestaosimples.corp.domain.Usuario;
 import com.gestaosimples.corp.dto.EnderecoDTO;
 import com.gestaosimples.corp.dto.TelefoneDTO;
@@ -59,12 +60,18 @@ public class DBService extends AbstractRepository {
                 "admin@gestaosimples.com", new Perfil[] {Perfil.M, Perfil.A});
 
         usuarioService.insert(usuario1);
+        UnidadeMedida un1 = unidadeMedidaRepository.save(new UnidadeMedida(new Empresa(emp1.getIdEmpresa()), "Unidade", "UN"));
+        UnidadeMedida un2 = unidadeMedidaRepository.save(new UnidadeMedida(new Empresa(emp1.getIdEmpresa()), "Pacote", "PC"));
 
         TelefoneDTO telefone2 = new TelefoneDTO(null, "6136051086", "61996863636", "61996863636");
         EnderecoDTO endereco2 = new EnderecoDTO(null, "sq 13 quadra 09 lota", "01 C", "", "centro", "72880576", new Cidade(1l));
         EmpresaDTO emp2 =
             new EmpresaDTO(null, "gestao simples", "network", "01508063000163", TipoPessoa.J.getCodigo(), "contato@gestaosimples.com", endereco2, telefone2);
         emp2 = empresaService.insert(new Empresa(emp2));
+        UnidadeMedida un3 = unidadeMedidaRepository.save(new UnidadeMedida(new Empresa(emp2.getIdEmpresa()), "Unidade", "UN"));
+        UnidadeMedida un4 = unidadeMedidaRepository.save(new UnidadeMedida(new Empresa(emp2.getIdEmpresa()), "Pacote", "PC"));
+        UnidadeMedida un5 = unidadeMedidaRepository.save(new UnidadeMedida(new Empresa(emp2.getIdEmpresa()), "Kilo", "Kg"));
+
         Usuario usuario2 =
             new Usuario("gestaosimples2", pe.encode("123"), new Empresa(emp2.getIdEmpresa()), new PessoaJuridica(emp2.getIdPessoaJuridica()),
                 "admin1@gestaosimples.com", Perfil.M);

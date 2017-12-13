@@ -18,10 +18,10 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     //Page<Produto> search(@Param("nome") String nome, @Param("categorias") List<Categoria> categorias, Pageable pageRequest);
 
     @Transactional(readOnly = true)
-    Page<Produto> findDistinctByNomeContainingIgnoreCaseAndCategoriasIn(@Param("nome") String nome, @Param("categorias") List<Categoria> categorias,
+    Page<Produto> findDistinctByNmProdutoContainingIgnoreCaseAndCategoriasIn(@Param("nome") String nome, @Param("categorias") List<Categoria> categorias,
         Pageable pageRequest);
 
     @Transactional(readOnly = true)
-    Page<Produto> findDistinctByNomeContainingIgnoreCase(@Param("nome") String nome, Pageable pageRequest);
+    Page<Produto> findDistinctByNmProdutoContainingIgnoreCase(@Param("nome") String nome, Pageable pageRequest);
 
 }

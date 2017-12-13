@@ -1,6 +1,7 @@
 package com.gestaosimples.servico.domain.dto;
 
 import java.io.Serializable;
+import com.gestaosimples.servico.domain.Produto;
 import com.gestaosimples.servico.domain.enuns.SimNao;
 
 public class ProdutoDTO implements Serializable {
@@ -8,7 +9,8 @@ public class ProdutoDTO implements Serializable {
     /**  */
     private static final long serialVersionUID = 6356730187701538408L;
 
-    private Long id;
+    private Long idProduto;
+    private Long idEmpresa;
     private String nmProduto;
     private SimNao possuiItens;
     private Double preco;
@@ -16,12 +18,15 @@ public class ProdutoDTO implements Serializable {
     public ProdutoDTO() {
     }
 
-    public Long getId() {
-        return id;
+    public ProdutoDTO(Produto x) {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(Long idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getNmProduto() {
@@ -46,6 +51,14 @@ public class ProdutoDTO implements Serializable {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Long getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Long idEmpresa) {
+        this.idEmpresa = idEmpresa;
     }
 
 }

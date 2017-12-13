@@ -11,8 +11,10 @@ import com.gestaosimples.corp.repositories.EstadoRepository;
 import com.gestaosimples.corp.repositories.PessoaFisicaRepository;
 import com.gestaosimples.corp.repositories.PessoaJuridicaRepository;
 import com.gestaosimples.corp.repositories.TelefoneRepository;
+import com.gestaosimples.corp.repositories.UnidadeMedidaRepository;
 import com.gestaosimples.corp.repositories.UsuarioRepository;
 import com.gestaosimples.servico.repositories.EmpresaRepository;
+import com.gestaosimples.servico.repositories.ProdutoRepository;
 
 public abstract class AbstractRepository extends AbstractService {
 
@@ -51,6 +53,12 @@ public abstract class AbstractRepository extends AbstractService {
     protected AplicacaoRepository aplicacaoRepository;
 
     @Autowired
+    protected UnidadeMedidaRepository unidadeMedidaRepository;
+
+    @Autowired
     protected AtividadeRepository atividadeRepository;
+
+    @Autowired
+    protected ProdutoRepository produtoRepository;
 
 }
