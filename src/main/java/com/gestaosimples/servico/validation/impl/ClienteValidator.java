@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.arquitetura.validation.FieldMessage;
-import com.gestaosimples.corp.repositories.EmailRepository;
-import com.gestaosimples.corp.repositories.PessoaFisicaRepository;
 import com.gestaosimples.servico.domain.dto.ClienteDTO;
 import com.gestaosimples.servico.validation.ClienteValidation;
 
@@ -19,12 +17,6 @@ public class ClienteValidator implements ConstraintValidator<ClienteValidation, 
 
     @Autowired
     HttpServletRequest request;
-
-    @Autowired
-    private PessoaFisicaRepository repo;
-
-    @Autowired
-    private EmailRepository EmailRepository;
 
     @Override
     public void initialize(ClienteValidation arg) {

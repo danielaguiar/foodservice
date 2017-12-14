@@ -13,7 +13,6 @@ import com.gestaosimples.arquitetura.exceptions.ObjectNotFoundException;
 import com.gestaosimples.arquitetura.security.services.UserService;
 import com.gestaosimples.arquitetura.security.util.UserSS;
 import com.gestaosimples.corp.domain.PessoaJuridica;
-import com.gestaosimples.corp.repositories.EnderecoRepository;
 import com.gestaosimples.corp.repositories.PessoaJuridicaRepository;
 import com.gestaosimples.servico.domain.Cliente;
 import com.gestaosimples.servico.domain.enuns.Perfil;
@@ -23,9 +22,6 @@ public class PessoaJuridicaService {
 
     @Autowired
     private PessoaJuridicaRepository repo;
-
-    @Autowired
-    private EnderecoRepository enderecoRepository;
 
     public PessoaJuridica find(Long idPessoa) {
 

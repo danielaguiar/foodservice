@@ -1,6 +1,7 @@
 package com.gestaosimples.corp.dto;
 
 import java.io.Serializable;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
