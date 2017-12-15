@@ -1,15 +1,13 @@
 package com.gestaosimples.servico.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "t_categoria")
 public class Categoria implements Serializable {
@@ -25,11 +23,26 @@ public class Categoria implements Serializable {
     @Column(name = "ds_categoria", length = 60)
     private String nome;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "categorias")
-    private List<Produto> produtos = new ArrayList<Produto>();
+    @ManyToOne
+    @JoinColumn(name = "id_empresa")
+    private Empresa empresa;
+
+    //    @JsonIgnore
+    //    @ManyToMany(mappedBy = "categorias")
+    //    private List<Produto> produtos = new ArrayList<Produto>();
 
     public Categoria() {
+    }
+
+    public Categoria(Long id, String nome, Empresa empresa) {
+        super();
+        this.id = id;
+        this.nome = nome;
+        this.empresa = empresa;
+    }
+
+    public Categoria(Empresa empresa, String nome) {
+        this(null, nome, empresa);
     }
 
     public Categoria(String nome) {
@@ -59,14 +72,6 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -90,6 +95,14 @@ public class Categoria implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
 }

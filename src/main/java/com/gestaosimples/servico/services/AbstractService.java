@@ -15,4 +15,7 @@ public abstract class AbstractService extends AbstractSmartFood {
     @Autowired
     protected ClienteService clienteService;
 
+    @Autowired
+    protected ProdutoService produtoService;
+
 }

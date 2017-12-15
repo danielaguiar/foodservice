@@ -35,10 +35,6 @@ public class Produto implements Serializable {
     private String nmProduto;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "st_possui_itens", length = 1)
-    private SimNao possuiItens;
-
-    @Enumerated(EnumType.STRING)
     @Column(name = "st_produto_composto", length = 1)
     private SimNao produtoComposto;
 
@@ -63,7 +59,7 @@ public class Produto implements Serializable {
     private List<UnidadeMedida> unidades = new ArrayList<UnidadeMedida>();
 
     @Column(name = "vl_preco", length = 10)
-    private Double preço;
+    private Double preco;
 
     @Column(name = "qtd_estoque", length = 10)
     private Integer qtdMinima;
@@ -74,25 +70,56 @@ public class Produto implements Serializable {
     @OneToMany(mappedBy = "produto")
     private List<ProdutoComposicao> composicoes;
 
+    @Column(name = "tx_info_complementar")
+    private String infoComplementar;
+
+    @Column(name = "tx_info_nutricional")
+    private String infoNutricional;
+
+    @Column(name = "url_blog")
+    private String urlBlog;
+
+    public Produto() {
+    }
+
+    public Produto(Long id, String nmProduto, SimNao produtoComposto, SimNao usoInterno, Status status, Empresa empresa, List<Categoria> categorias,
+        List<UnidadeMedida> unidades, Double preco, Integer qtdMinima, Integer qtdMinimaEstoque, List<ProdutoComposicao> composicoes, String infoComplementar,
+        String infoNutricional, String urlBlog) {
+        super();
+        this.id = id;
+        this.nmProduto = nmProduto;
+        this.produtoComposto = produtoComposto;
+        this.usoInterno = usoInterno;
+        this.status = status;
+        this.empresa = empresa;
+        this.categorias = categorias;
+        this.unidades = unidades;
+        this.preco = preco;
+        this.qtdMinima = qtdMinima;
+        this.qtdMinimaEstoque = qtdMinimaEstoque;
+        this.composicoes = composicoes;
+        this.infoComplementar = infoComplementar;
+        this.infoNutricional = infoNutricional;
+        this.urlBlog = urlBlog;
+    }
+
     public Produto(ProdutoDTO dto) {
-    }
-
-    public Produto(Long id) {
         super();
-        this.id = id;
-    }
-
-    public Produto(Long id, String nmProduto, Double preço) {
-        super();
-        this.id = id;
-        this.nmProduto = nmProduto;
-        this.preço = preço;
-    }
-
-    public Produto(String nmProduto, Double preço) {
-        super();
-        this.nmProduto = nmProduto;
-        this.preço = preço;
+        this.id = dto.getIdProduto();
+        this.empresa = new Empresa(dto.getIdEmpresa());
+        this.nmProduto = dto.getNmProduto();
+        this.produtoComposto = dto.getProdutoComposto();
+        this.usoInterno = dto.getUsoInterno();
+        this.status = dto.getStatus();
+        this.unidades = dto.getUnidades();
+        this.categorias = dto.getCategorias();
+        this.preco = dto.getPreco();
+        this.qtdMinima = dto.getQtdMinima();
+        this.qtdMinimaEstoque = dto.getQtdMinima();
+        this.composicoes = dto.getComposicoes();
+        this.infoComplementar = dto.getInfoComplementar();
+        this.infoNutricional = dto.getInfoNutricional();
+        this.urlBlog = dto.getUrlBlog();
     }
 
     public Long getId() {
@@ -111,42 +138,6 @@ public class Produto implements Serializable {
         this.nmProduto = nmProduto;
     }
 
-    public Double getPreço() {
-        return preço;
-    }
-
-    public void setPreço(Double preço) {
-        this.preço = preço;
-    }
-
-    public SimNao getPossuiItens() {
-        return possuiItens;
-    }
-
-    public void setPossuiItens(SimNao possuiItens) {
-        this.possuiItens = possuiItens;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public List<Categoria> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
     public SimNao getProdutoComposto() {
         return produtoComposto;
     }
@@ -161,6 +152,46 @@ public class Produto implements Serializable {
 
     public void setUsoInterno(SimNao usoInterno) {
         this.usoInterno = usoInterno;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public List<UnidadeMedida> getUnidades() {
+        return unidades;
+    }
+
+    public void setUnidades(List<UnidadeMedida> unidades) {
+        this.unidades = unidades;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 
     public Integer getQtdMinima() {
@@ -179,10 +210,6 @@ public class Produto implements Serializable {
         this.qtdMinimaEstoque = qtdMinimaEstoque;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
     public List<ProdutoComposicao> getComposicoes() {
         return composicoes;
     }
@@ -191,12 +218,28 @@ public class Produto implements Serializable {
         this.composicoes = composicoes;
     }
 
-    public List<UnidadeMedida> getUnidades() {
-        return unidades;
+    public String getInfoComplementar() {
+        return infoComplementar;
     }
 
-    public void setUnidades(List<UnidadeMedida> unidades) {
-        this.unidades = unidades;
+    public void setInfoComplementar(String infoComplementar) {
+        this.infoComplementar = infoComplementar;
+    }
+
+    public String getInfoNutricional() {
+        return infoNutricional;
+    }
+
+    public void setInfoNutricional(String infoNutricional) {
+        this.infoNutricional = infoNutricional;
+    }
+
+    public String getUrlBlog() {
+        return urlBlog;
+    }
+
+    public void setUrlBlog(String urlBlog) {
+        this.urlBlog = urlBlog;
     }
 
 }

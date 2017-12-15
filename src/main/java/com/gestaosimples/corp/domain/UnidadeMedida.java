@@ -79,5 +79,4 @@ public class UnidadeMedida implements Serializable {
     public void setSigla(String sigla) {
         this.sigla = sigla;
     }
-
 }

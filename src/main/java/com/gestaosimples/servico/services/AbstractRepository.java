@@ -3,6 +3,7 @@ package com.gestaosimples.servico.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.gestaosimples.corp.repositories.AplicacaoRepository;
 import com.gestaosimples.corp.repositories.AtividadeRepository;
+import com.gestaosimples.corp.repositories.CategoriaRepository;
 import com.gestaosimples.corp.repositories.CidadeRepository;
 import com.gestaosimples.corp.repositories.ClienteRepository;
 import com.gestaosimples.corp.repositories.EmailRepository;
@@ -60,5 +61,8 @@ public abstract class AbstractRepository extends AbstractService {
 
     @Autowired
     protected ProdutoRepository produtoRepository;
+
+    @Autowired
+    protected CategoriaRepository categoriaRepository;
 
 }
