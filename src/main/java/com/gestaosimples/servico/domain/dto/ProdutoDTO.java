@@ -33,6 +33,7 @@ public class ProdutoDTO implements Serializable {
     private String infoComplementar;
     private String infoNutricional;
     private String urlBlog;
+    private String codigoBarra;
 
     public ProdutoDTO(Produto produto) {
 
@@ -73,7 +74,8 @@ public class ProdutoDTO implements Serializable {
         this.urlBlog = urlBlog;
     }
 
-    public ProdutoDTO(Long idProduto, Long idEmpresa, String nmProduto, SimNao produtoComposto, SimNao usoInterno, Status status, Double preco) {
+    public ProdutoDTO(Long idProduto, Long idEmpresa, String nmProduto, SimNao produtoComposto, SimNao usoInterno, Status status, Double preco,
+        String codigoBarra) {
         super();
         this.idProduto = idProduto;
         this.idEmpresa = idEmpresa;
@@ -90,6 +92,7 @@ public class ProdutoDTO implements Serializable {
         //        this.infoComplementar = infoComplementar;
         //        this.infoNutricional = infoNutricional;
         //        this.urlBlog = urlBlog;
+        this.codigoBarra = codigoBarra;
     }
 
     public Long getIdProduto() {
@@ -210,6 +213,14 @@ public class ProdutoDTO implements Serializable {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public String getCodigoBarra() {
+        return codigoBarra;
+    }
+
+    public void setCodigoBarra(String codigoBarra) {
+        this.codigoBarra = codigoBarra;
     }
 
 }

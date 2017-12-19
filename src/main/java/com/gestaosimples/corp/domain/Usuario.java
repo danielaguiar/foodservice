@@ -56,6 +56,7 @@ public class Usuario implements Serializable {
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "t_usuario_perfil", joinColumns = @JoinColumn(name = "id_usuario_perfil"))
+    @Column(name = "cl_usuario_perfil")
     private Set<Perfil> perfis = new HashSet<Perfil>();
 
     public Usuario() {

@@ -71,7 +71,7 @@ public class DBService extends AbstractRepository {
         Categoria cat1 = categoriaRepository.save(new Categoria(new Empresa(emp1.getIdEmpresa()), "Hamburguer"));
         Categoria cat2 = categoriaRepository.save(new Categoria(new Empresa(emp1.getIdEmpresa()), "Sobremesa"));
 
-        ProdutoDTO prod1 = new ProdutoDTO(null, emp1.getIdEmpresa(), "X-bacon sala", SimNao.S, SimNao.N, Status.A, 12.00d);
+        ProdutoDTO prod1 = new ProdutoDTO(null, emp1.getIdEmpresa(), "X-bacon sala", SimNao.S, SimNao.N, Status.A, 12.00d, "000000000001");
         prod1.setUnidades(Arrays.asList(un1, un2));
         prod1.setCategorias(Arrays.asList(cat1, cat2));
         Produto produto = new Produto(prod1);

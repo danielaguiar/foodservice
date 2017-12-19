@@ -2,11 +2,15 @@ package com.gestaosimples.servico.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -79,6 +83,16 @@ public class Produto implements Serializable {
     @Column(name = "url_blog")
     private String urlBlog;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "t_produto_imagem", joinColumns = @JoinColumn(name = "id_produto"))
+    @Column(name = "ds_produto_imagem")
+    private Set<String> imagens = new HashSet<String>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "t_produto_cod_barra", joinColumns = @JoinColumn(name = "id_produto"))
+    @Column(name = "ds_produto_cod_barra")
+    private Set<String> codigoBarras = new HashSet<String>();
+
     public Produto() {
     }
 
@@ -120,6 +134,7 @@ public class Produto implements Serializable {
         this.infoComplementar = dto.getInfoComplementar();
         this.infoNutricional = dto.getInfoNutricional();
         this.urlBlog = dto.getUrlBlog();
+        this.codigoBarras.add(dto.getCodigoBarra());
     }
 
     public Long getId() {
@@ -240,6 +255,22 @@ public class Produto implements Serializable {
 
     public void setUrlBlog(String urlBlog) {
         this.urlBlog = urlBlog;
+    }
+
+    public Set<String> getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    public void setCodigoBarras(Set<String> codigoBarras) {
+        this.codigoBarras = codigoBarras;
+    }
+
+    public Set<String> getImagens() {
+        return imagens;
+    }
+
+    public void setImagens(Set<String> imagens) {
+        this.imagens = imagens;
     }
 
 }
