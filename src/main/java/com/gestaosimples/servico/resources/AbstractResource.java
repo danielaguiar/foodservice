@@ -4,8 +4,9 @@ import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import com.gestaosimples.servico.services.AbstractService;
 
-public abstract class AbstractResource {
+public abstract class AbstractResource extends AbstractService {
 
     protected URI getUriPath(String path, Object id) {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path(path).buildAndExpand(id).toUri();

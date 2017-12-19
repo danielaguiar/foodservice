@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
+import com.gestaosimples.corp.dto.UsuarioDTO;
 import com.gestaosimples.servico.domain.Empresa;
 import com.gestaosimples.servico.domain.enuns.Perfil;
 
@@ -60,6 +61,9 @@ public class Usuario implements Serializable {
     private Set<Perfil> perfis = new HashSet<Perfil>();
 
     public Usuario() {
+    }
+
+    public Usuario(UsuarioDTO cliente) {
     }
 
     public Usuario(String login, String senha, Empresa empresa, Pessoa pessoa, String edEmail, Perfil perfil) {

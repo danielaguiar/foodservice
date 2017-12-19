@@ -2,31 +2,22 @@ package com.gestaosimples.servico.validation.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.HandlerMapping;
 import com.gestaosimples.arquitetura.util.CPFCNPJUtil;
 import com.gestaosimples.arquitetura.util.ObjetoUtil;
 import com.gestaosimples.arquitetura.validation.FieldMessage;
 import com.gestaosimples.corp.domain.Email;
-import com.gestaosimples.corp.repositories.EmailRepository;
 import com.gestaosimples.servico.domain.dto.EmpresaDTO;
-import com.gestaosimples.servico.services.EmpresaService;
+import com.gestaosimples.servico.validation.AbstractValitation;
 import com.gestaosimples.servico.validation.EmpresaValidation;
 
-public class EmpresaValidator implements ConstraintValidator<EmpresaValidation, EmpresaDTO> {
+public class EmpresaValidator extends AbstractValitation implements ConstraintValidator<EmpresaValidation, EmpresaDTO> {
 
     @Autowired
     HttpServletRequest request;
-
-    @Autowired
-    private EmpresaService empresaService;
-
-    @Autowired
-    private EmailRepository emailRepository;
 
     @Override
     public void initialize(EmpresaValidation arg) {
@@ -36,7 +27,7 @@ public class EmpresaValidator implements ConstraintValidator<EmpresaValidation, 
     @Override
     public boolean isValid(EmpresaDTO dto, ConstraintValidatorContext context) {
         List<FieldMessage> list = new ArrayList<>();
-        Long idEmpresa = recuperarIdEmpresa();
+        Long idEmpresa = recuperarIdURL("id");
 
         validarEmpresa(idEmpresa, dto, list);
         for (FieldMessage e : list) {
@@ -44,16 +35,6 @@ public class EmpresaValidator implements ConstraintValidator<EmpresaValidation, 
             context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName()).addConstraintViolation();
         }
         return list.isEmpty();
-    }
-
-    @SuppressWarnings("unchecked")
-    private Long recuperarIdEmpresa() {
-        try {
-            Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-            return Long.parseLong(map.get("id"));
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     private void validarEmpresa(Long idEmpresa, EmpresaDTO dto, List<FieldMessage> list) {

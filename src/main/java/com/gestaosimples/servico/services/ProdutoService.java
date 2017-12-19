@@ -33,8 +33,8 @@ public class ProdutoService extends AbstractRepository {
             throw new AuthorizationException("operação no permitida");
         }
 
-        Produto pessoa = findOne(id);
-        return fromProduto(pessoa);
+        Produto produto = findOne(id);
+        return fromProduto(produto);
     }
 
     public ProdutoDTO insert(Produto produto) {

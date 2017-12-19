@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gestaosimples.servico.domain.Empresa;
 
 @Entity
@@ -23,6 +24,7 @@ public class UnidadeMedida implements Serializable {
     @Column(length = 9, name = "id_unidade_medida")
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_empresa")
     private Empresa empresa;

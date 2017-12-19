@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "t_categoria")
 public class Categoria implements Serializable {
@@ -23,6 +24,7 @@ public class Categoria implements Serializable {
     @Column(name = "ds_categoria", length = 60)
     private String nome;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_empresa")
     private Empresa empresa;

@@ -52,6 +52,7 @@ public class ProdutoDTO implements Serializable {
         this.infoComplementar = produto.getInfoComplementar();
         this.infoNutricional = produto.getInfoNutricional();
         this.urlBlog = produto.getUrlBlog();
+        this.codigoBarra = produto.getCodigoBarras().iterator().next();
     }
 
     public ProdutoDTO(Long idProduto, Long idEmpresa, String nmProduto, SimNao possuiItens, SimNao produtoComposto, SimNao usoInterno, Status status,
